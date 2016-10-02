@@ -1,10 +1,11 @@
 /*Fase 1 de proyecto memoria RAM 
 */
-module ram256x8 (DataIn, DataOut, rw, address, mv, enable, typeData);
+module ram256x8 (DataIn, DataOut, rw, address, mv,moc, enable, typeData);
 input [63:0] DataIn;//1 byte
 input [7:0] address;
 input enable;
 input rw;
+output reg moc; //Handshaking
 input mv;//Handshaking
 output reg [63:0] DataOut; //1 byte
 reg [7:0] mem [0:256];//256 localizaciones de 8 bits
@@ -34,6 +35,7 @@ always @(rw, enable)
 					, mem[address+5], mem[address+6], mem[address+7]};
 					end			
 				endcase
+				moc =1;
 			end
 		else //write
 			begin
@@ -65,6 +67,7 @@ always @(rw, enable)
 					mem[address+7] = DataIn[7:0];
 					end
 			    endcase
+				moc =1;
 			end		
 	end
 endmodule
