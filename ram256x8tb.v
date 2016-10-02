@@ -44,19 +44,32 @@ initial begin
   mv = 0;
   address=0;   
   DaIn=0; 
+  typeData =0;
+  //Initializing 
+  $display("***=============Testing precharged memory=============***");
+  	rw = READ; 
+	address = 0;
+	enable =0;
+repeat(8) 
+	begin 
+     enable = ~enable; 
+	 #5 address = address +1;
+	 mv = 1; //memory operation valid
+	 #5 mv =0;
+	end
+$display("***=============Testing bytess=============***");
   enable=0;
   DaIn  =8'h9a;
   rw =WRITE;
   typeData = BYTE;
-  $display("***=============Testing bytess=============***");
-   $display("=============Writing bytess=============");
+$display("=============Writing bytess=============");
   repeat(2) 
 	begin 
      enable = ~enable; 
 	 #5 address = address +2;
 	 DaIn = DaIn +1;
 	 mv = 1; //memory operation valid
-	 #50 mv =0;
+	 #5 mv =0;
 	end
    $display("=============Readig bytess=============");
 	rw = READ; 
@@ -67,7 +80,7 @@ initial begin
      enable = ~enable; 
 	 #5 address = address +2;
 	 mv = 1; //memory operation valid
-	 #50 mv =0;
+	 #5 mv =0;
 	end
   $display("***=============Testing halfwords=============***");
   $display("=============Writing halfwords=============");
@@ -81,7 +94,7 @@ initial begin
 	 #5 address = address +2;
 	 DaIn = DaIn +1;
 	 mv = 1; //memory operation valid
-	 #50 mv =0;
+	 #5 mv =0;
 	end
 	$display("=============Readig halfwords=============");
 	rw = READ; 
@@ -92,7 +105,7 @@ initial begin
      enable = ~enable; 
 	 #5 address = address +2;
 	 mv = 1; //memory operation valid
-	 #50 mv =0;
+	 #5 mv =0;
 	end
 	$display("***=============Testing word=============***");
     $display("=============Writing words=============");
@@ -106,7 +119,7 @@ initial begin
 	 #5 address = address + 4;
 	 DaIn = DaIn +1;
 	 mv = 1; //memory operation valid
-	 #50 mv =0;
+	 #5 mv =0;
 	end
 	$display("=============Readig words=============");
 	rw = READ; 
@@ -117,7 +130,7 @@ initial begin
      enable = ~enable; 
 	 #5 address = address +4;
 	 mv = 1; //memory operation valid
-	 #50 mv =0;
+	 #5 mv =0;
 	end
 	$display("***=============Testing double words=============***");
     $display("=============Writing  double words=============");
@@ -131,7 +144,7 @@ initial begin
 	 #5 address = address + 8;
 	 DaIn = DaIn +1;
 	 mv = 1; //memory operation valid
-	 #50 mv =0;
+	 #5 mv =0;
 	end
 	$display("=============Readig double words=============");
 	rw = READ; 
@@ -142,7 +155,7 @@ initial begin
      enable = ~enable; 
 	 #5 address = address +8;
 	 mv = 1; //memory operation valid
-	 #50 mv =0;
+	 #5 mv =0;
 	end
   $finish;
 end
