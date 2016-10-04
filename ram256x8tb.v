@@ -52,21 +52,22 @@ initial begin
 	enable =0;
 repeat(8) 
 	begin 
-     enable = ~enable; 
 	 #5 address = address +1;
+     enable = ~enable; 
 	 mv = 1; //memory operation valid
 	 #5 mv =0;
 	end
 $display("***=============Testing bytess=============***");
   enable=0;
   DaIn  =8'h9a;
+  address =0;
   rw =WRITE;
   typeData = BYTE;
 $display("=============Writing bytess=============");
   repeat(2) 
 	begin 
      enable = ~enable; 
-	 #5 address = address +2;
+	 address = address +2;
 	 DaIn = DaIn +1;
 	 mv = 1; //memory operation valid
 	 #5 mv =0;
@@ -77,8 +78,8 @@ $display("=============Writing bytess=============");
 	enable =0;
   repeat(2) 
 	begin 
-     enable = ~enable; 
-	 #5 address = address +2;
+     enable = ~enable;
+	 address = address +2;	 
 	 mv = 1; //memory operation valid
 	 #5 mv =0;
 	end
@@ -91,7 +92,7 @@ $display("=============Writing bytess=============");
   repeat(2) 
 	begin 
      enable = ~enable; 
-	 #5 address = address +2;
+	 address = address +2;
 	 DaIn = DaIn +1;
 	 mv = 1; //memory operation valid
 	 #5 mv =0;
@@ -103,7 +104,7 @@ $display("=============Writing bytess=============");
   repeat(2) 
 	begin 
      enable = ~enable; 
-	 #5 address = address +2;
+	 address = address +2;
 	 mv = 1; //memory operation valid
 	 #5 mv =0;
 	end
@@ -115,8 +116,8 @@ $display("=============Writing bytess=============");
   address =0; 
   repeat(2) 
 	begin 
-     enable = ~enable; 
-	 #5 address = address + 4;
+     enable = ~enable;
+     address = address + 4;	 
 	 DaIn = DaIn +1;
 	 mv = 1; //memory operation valid
 	 #5 mv =0;
@@ -126,9 +127,9 @@ $display("=============Writing bytess=============");
 	address = 0;
 	enable =0;
   repeat(2) 
-	begin 
+	begin
      enable = ~enable; 
-	 #5 address = address +4;
+	 address = address +4;	
 	 mv = 1; //memory operation valid
 	 #5 mv =0;
 	end
@@ -141,7 +142,7 @@ $display("=============Writing bytess=============");
   repeat(2) 
 	begin 
      enable = ~enable; 
-	 #5 address = address + 8;
+	 address = address + 8;
 	 DaIn = DaIn +1;
 	 mv = 1; //memory operation valid
 	 #5 mv =0;
@@ -153,7 +154,7 @@ $display("=============Writing bytess=============");
   repeat(2) 
 	begin 
      enable = ~enable; 
-	 #5 address = address +8;
+	 address = address +8;
 	 mv = 1; //memory operation valid
 	 #5 mv =0;
 	end
