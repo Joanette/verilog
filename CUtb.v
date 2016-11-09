@@ -1,12 +1,20 @@
 module CUtb; 
 	//CU parameters:
-	reg clk;
+	//reg clk;
 	reg [6:0] state;
-	wire RFLd,IRLd,MARLd;
-	wire MDRLd, RW, MOV;
-	wire typeData, px[0:3];
-	wire FRLd,MA1,MA0;
-	wire MB1MB0;
+	wire RFLd;
+	wire IRLd;
+	wire MARLd;
+	wire MDRLd;
+	wire RW;
+	wire MOV;
+	wire typeData
+    wire px[0:3];
+	wire FRLd;
+	wire MA1;
+	wire MA0;
+	wire MB1;
+	wire MB0;
 	wire MC1;
 	wire MC0;
 	wire MD;
@@ -27,7 +35,7 @@ module CUtb;
 	wire OP1;
 	wire OP0;
 	//instanitate a controlUnit
-	controlUnit cu(RFLd, IRLd, MARLd, MDRLd, RW, MOV, typeData,px, FRLd, MA1, MA0, MB1, MB0, MC1, MC0, MD, ME,MF, MG,MH, MI0,MI1, E, T1,T0,S5,S4,S3,S2,S1,S0, OP4, OP3, OP2, OP1, OP0, state);
+	controlUnit cu(RFLd,IRLd, MARLd, MDRLd, RW, MOV, typeData,px, FRLd, MA1, MA0, MB1, MB0, MC1, MC0, MD, ME,MF, MG,MH, MI0,MI1, E, T1,T0,S5,S4,S3,S2,S1,S0, OP4, OP3, OP2, OP1, OP0, state);
 	initial begin
 		state = 6'b000000;
 		$display("Hello World");
