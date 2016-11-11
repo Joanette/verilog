@@ -36,11 +36,54 @@ always @(currentS)
 					DATAPIMMEDIATE: nextS = 6'd6;
 					BRANCH: 
 					  begin
-						if(currentS == 8)
+						if(ir[20] == 1)
+							nextS = 6'd8;
+						else if(ir[20]==0)
 							nextS = 6'd7;
+						if(currentS == 8)
+							nextS = 6'd7; 
 						else if(currentS == 7)
-							nextS = 0;
+							nextS = 6'd6;
 					  end
+					LANDSIMMEDIATE:
+						if(ir[23] == 1)
+							nextS = 6'd33;
+						else if (ir[23]==0)
+							nextS = 6'd46;
+						if (ir[24] == 0)
+							nextS = 6'd40;
+					LANDSREG:
+						if(ir[23]==1)
+							nextS = 6'd47;
+						else if(ir[23] == 0)
+							nextS = 6'd37;
+					    else if(currentS == 6'd40 || currentS ==6d'47
+						||currentS== 6d'37)begin
+							if(ir[20] = 1 and ir[22] = 0)
+								nextS = 6'd34;
+							else 
+								nextS= 6'd44;
+							end
+						else if(currentS == 6'd34 || currentS == 6'd44)
+							nextS = 6'd35;
+						else if(currentS = 6'd35)
+							nextS = 6'd36;
+						else if(currentS = 6'd36)
+							begin
+								if(ir[24]==1 & ir[21] ==0)
+									nextS = 6'd0;
+								else if(ir[24]==0 & ir[21]==1)//dudas!
+									begin
+										if(ir[23] == 0)
+										 nextS = 6'd49;
+										else 
+										 nextS = 6'd39;
+									end
+						    end
+						else if(currentS == 6'd39)
+							nextS = 6'd0;
+						else if(currentS == 6'd49)
+							nextS = 6'd0;
 					endcase
 				end
 			end
