@@ -116,7 +116,7 @@ always@(state)
 			OP4  	 <= 1;
 			OP1      <= 1; 
 			OP0 	 <= 1;	
-			nextS    = 1;
+			nextS    = 6'd6;
 		end	
 		else if (state == 6'd6) 
 		begin
@@ -486,7 +486,7 @@ always@(state)
 		 DATAPSHIFTER: 
 			nextS = 6'd5;
 		 DATAPIMMEDIATE:
-			nextS = 6'd6;
+			nextS = 6'd7;
 		 BRANCH:
 			begin 
 				if(ir[20] ==0)
