@@ -1,11 +1,15 @@
 module cond_tester(output reg cond, input [3:0] cc, input [3:0] flag);
-reg n = flag[3];
-reg z = flag[2];
-reg c = flag[1];
-reg v = flag[0];
+reg n;
+reg z;
+reg c;
+reg v;
 always @(cc, flag)
 begin
-  case (code) begin
+n = flag[3];
+z = flag[2];
+c = flag[1];
+v = flag[0];
+  case (cc)
     0 : cond = z;
     1 : cond = ~z;
     2 : cond = c;
