@@ -7,7 +7,6 @@ module nextStateEnctb;
 nextStateEnc nse(cond,moc,state,ir,nextS);	
 	initial begin 
 		#5 state = 6'd4; ir = 32'b11100010000000010000000000000000;cond=1'b1; moc=1'b1;
-		
 	end
 	initial 
 	$monitor($time, "Current State = %d, Next State = %d", state, nextS); 

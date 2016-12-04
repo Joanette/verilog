@@ -34,17 +34,24 @@ input [31:0] L2;
 		end
 endmodule
 
-module MUXC(outC,ir,MC);
-output reg [3:0] outC; 
-input MC; 
+module MUXC(outC,ir,L0,MC);
+output reg [3:0] outC;
+input [3:0] L0;
+input [3:0]MC; 
 input [31:0] ir;
 	always @(MC)
 		begin 
 		case(MC)
-		 1'd0: 
-			outC = ir[15:12];
-		 1'd1: 
-			outC = 4'd15;
+		 3'd0: 
+			outC = L0;
+		 3'd1: 
+			outC = ir[19:12];
+		 3'd2:
+			outC = 4'b1110; 
+		 3'd3:
+			outC = 4'b1111; 
+		 3'd4: 
+			outC = 4'b0001;
 		 endcase
 		end
 endmodule

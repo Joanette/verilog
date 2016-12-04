@@ -161,5 +161,5 @@ $display("=============Writing bytess=============");
   $finish;
 end
  initial 
- $monitor("At address=%h,DataIn=%h,DataOut=%h, rw=%b, typeData= %b, enable = %b",address,DaIn,DaOut,rw,typeData,enable);
+ $monitor($time," At address=%h,DataIn=%h,DataOut=%h, rw=%b, typeData= %b, enable = %b",address,DaIn,DaOut,rw,typeData,enable);
 endmodule
