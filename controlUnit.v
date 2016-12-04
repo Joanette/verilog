@@ -46,19 +46,16 @@ initial begin
 	$display("starting at state: %d", state);
 end
 
-always@(posedge CLK)
+always@(posedge CLK, negedge CLR)
 	begin
-		#50
-		state = nextS;
-		state = nextS;
-		$display("posedge detected! nextS = %d, state = %d ", nextS, state);
+		state <= nextS;
+		$display("posedge detected! nextS = %d, state = %d ", nextS, state);  
 	end
 always@(state)
 	begin   
 		if (state == 0) 
 		begin
 			RFLd <= 0;IRLd<= 0;MARLd<= 0;MDRLd<= 0;E = 0;RW<= 0;MOV <=0;typeData <=0;px<= 4'b0000;FRLd<=0;MA1<=0;MA0<= 0;MB1<= 0;MB0<=0;MC2<= 0;MC1<= 0;MC0<= 0;MD <= 0;ME<= 0;MF1<=0;MF0<= 0;MG <= 0;MH<=0;MI1<=0;MI0<= 0;MJ1 <=0;MJ0<= 0;T0 <= 0;T1 <= 0;T2 <=0;S5 <= 0;S4 <=0;S3<= 0;S2<= 0;S1<= 0;S0<= 0;OP4<= 0;OP3 <= 0;OP2 <= 0;OP1 <= 0;OP0 <= 0;
-			#50
 			nextS = 1;
 		    $display("here state 0: %d nextS: %d", state, nextS);
 		end
@@ -69,7 +66,6 @@ always@(state)
 			MA1 	 <= 1;
 			MD  	 <= 1;
 			OP4      <= 1;
-			#50
 			nextS = 6'd2;
 			$display("what uo state 1: %d, nextS: %d \n", state, nextS);
 		end
@@ -84,7 +80,6 @@ always@(state)
 			MD  	 <= 1;
 			OP4      <= 1; 
 			OP0      <= 1;
-			#50 
 			nextS   = 6'd3;
 			$display("que la que state 2: %d:\n", state, nextS);
 		end
@@ -93,8 +88,7 @@ always@(state)
 		   RFLd <= 0;IRLd<= 0;MARLd<= 0;MDRLd<= 0;E = 0;RW<= 0;MOV <=0;typeData <=0;px<= 4'b0000;FRLd<=0;MA1<=0;MA0<= 0;MB1<= 0;MB0<=0;MC2<= 0;MC1<= 0;MC0<= 0;MD <= 0;ME<= 0;MF1<=0;MF0<= 0;MG <= 0;MH<=0;MI1<=0;MI0<= 0;MJ1 <=0;MJ0<= 0;T0 <= 0;T1 <= 0;T2 <=0;S5 <= 0;S4 <=0;S3<= 0;S2<= 0;S1<= 0;S0<= 0;OP4<= 0;OP3 <= 0;OP2 <= 0;OP1 <= 0;OP0 <= 0;
 			IRLd     <= 1;
 			RW       <= 1;
-			MOV      <= 1;
-			#50 
+			MOV      <= 1; 
 			if(moc == 1)
 				nextS = 6'd4;
 			else 
@@ -103,7 +97,6 @@ always@(state)
 		else if (state == 6'd4) 
 		begin
 		RFLd <= 0;IRLd<= 0;MARLd<= 0;MDRLd<= 0;E = 0;RW<= 0;MOV <=0;typeData <=0;px<= 4'b0000;FRLd<=0;MA1<=0;MA0<= 0;MB1<= 0;MB0<=0;MC2<= 0;MC1<= 0;MC0<= 0;MD <= 0;ME<= 0;MF1<=0;MF0<= 0;MG <= 0;MH<=0;MI1<=0;MI0<= 0;MJ1 <=0;MJ0<= 0;T0 <= 0;T1 <= 0;T2 <=0;S5 <= 0;S4 <=0;S3<= 0;S2<= 0;S1<= 0;S0<= 0;OP4<= 0;OP3 <= 0;OP2 <= 0;OP1 <= 0;OP0 <= 0;
-		#50
 			if(cond == 6'd0) 
 				begin	
 				  nextS = 6'd1;
@@ -122,8 +115,7 @@ always@(state)
 			E 		 <= 1;
 			OP4  	 <= 1;
 			OP1      <= 1; 
-			OP0 	 <= 1;
-			#50	
+			OP0 	 <= 1;	
 			nextS    = 1;
 		end	
 		else if (state == 6'd6) 
@@ -131,8 +123,7 @@ always@(state)
 		RFLd <= 0;IRLd<= 0;MARLd<= 0;MDRLd<= 0;E = 0;RW<= 0;MOV <=0;typeData <=0;px<= 4'b0000;FRLd<=0;MA1<=0;MA0<= 0;MB1<= 0;MB0<=0;MC2<= 0;MC1<= 0;MC0<= 0;MD <= 0;ME<= 0;MF1<=0;MF0<= 0;MG <= 0;MH<=0;MI1<=0;MI0<= 0;MJ1 <=0;MJ0<= 0;T0 <= 0;T1 <= 0;T2 <=0;S5 <= 0;S4 <=0;S3<= 0;S2<= 0;S1<= 0;S0<= 0;OP4<= 0;OP3 <= 0;OP2 <= 0;OP1 <= 0;OP0 <= 0;
 			RFLd     <= 1;
 			FRLd	 <= 1;
-			MJ0 	 <= 1;
-			#50	
+			MJ0 	 <= 1;	
 			nextS    = 1;
 		end	
 		else if (state == 6'd7)
@@ -142,8 +133,7 @@ always@(state)
 			FRLd	 <= 1;
 			MB0		 <= 1; 
 			MH  	 <= 1;
-			MI0		 <= 1;
-            #50			
+			MI0		 <= 1;			
 			nextS    = 1;
 		end	
 		else if (state == 6'd8) 
@@ -163,7 +153,6 @@ always@(state)
 			OP4		 <= 1;
 			OP1		 <= 1; 
 			OP0		 <= 1;
-			#50
 			nextS  = 6'd9;
 		end	
 		else if (state == 6'd9)
@@ -177,7 +166,6 @@ always@(state)
 			MJ0  <= 1; 
 			S2 	 <= 1; 
 			OP2  <= 1; 
-			#50
 			nextS = 6'd1;
 		end
 		else if(state == 6'd10)
@@ -191,7 +179,6 @@ always@(state)
 			MJ0  <= 1; 
 			S2   <= 1; 
 			OP2  <= 1;
-			#50
 			nextS = 6'd8;
 		end
 		else if (state == 6'd33) 
@@ -202,7 +189,6 @@ always@(state)
 			MD 	     <= 1;
 			MI1 	 <= 1;
 			OP2  	 <= 1;
-			#50
 			if(ir[20] == 0)
 				nextS = 6'd41; 
 			else 
@@ -220,7 +206,7 @@ always@(state)
 			MOV  	 <= 1;
 			typeData <= 2'b10;
 			MI1 	 <= 1;
-			#50
+			
 			nextS    = 6'd35;
 		end	
 		else if (state == 6'd35) 
@@ -231,7 +217,7 @@ always@(state)
 			MOV      <= 1;
 			MB1 	 <= 1;
 			MI1 	 <= 1;
-			#50
+			
 			if(ir[20]==1 && ir[22]==0)
 			nextS = 6'd50; 
 			else if(ir[20]==1 && ir[22]==1)
@@ -247,7 +233,7 @@ always@(state)
 			OP4 	 <= 1;
 			OP1		 <= 1;
 			OP0 	 <= 1;
-			#50
+			
 			if(ir[24] == 1 && ir[21]==0)
 				nextS = 6'd1;
 			else if(ir[24] == 0 || (ir[24] == 1 && ir[21]==1))
@@ -275,7 +261,7 @@ always@(state)
 			MD 		 <= 1;
 			MI1 	 <= 1;
 			OP2		 <= 1;
-			#50
+			
 			if(ir[20] == 0)
 				nextS = 6'd41; 
 			else 
@@ -295,7 +281,7 @@ always@(state)
 			MD 		 <= 1;
 			MI1 	 <= 1;
 			OP2		 <= 1;
-			#50
+			
 			nextS    = 6'd1;
 		end	
 		else if (state == 6'd39) 
@@ -306,7 +292,7 @@ always@(state)
 			MD	 	 <= 1;
 			MI1 	 <= 1;
 			OP2		 <= 1;
-			#50 
+			 
 			nextS    = 6'd1;
 		end	else if (state == 6'd40) 
 		begin
@@ -317,7 +303,7 @@ always@(state)
 			MD 	 	 <= 1;
 			MI1		 <= 1;
 			OP4 	 <= 1;
-			#50
+			
 			if(ir[20] == 0)
 				nextS = 6'd41; 
 			else 
@@ -339,7 +325,7 @@ always@(state)
 			ME		 <= 1;
 			MI1		 <= 1;
 			OP4	     <= 1;
-			#50
+			
 			if(ir[22] == 0)
 				nextS <= 6'd42; 
 			else if(ir[22] == 1)
@@ -351,14 +337,14 @@ always@(state)
 			MOV      <= 1;
 			typeData <= 2'b10;
 			MI1 	 <= 1;
-			#50
+			
 			nextS    = 6'd45;
 		end	
 		else if (state == 6'd43) 
 		begin
 		RFLd <= 0;IRLd<= 0;MARLd<= 0;MDRLd<= 0;E = 0;RW<= 0;MOV <=0;typeData <=0;px<= 4'b0000;FRLd<=0;MA1<=0;MA0<= 0;MB1<= 0;MB0<=0;MC2<= 0;MC1<= 0;MC0<= 0;MD <= 0;ME<= 0;MF1<=0;MF0<= 0;MG <= 0;MH<=0;MI1<=0;MI0<= 0;MJ1 <=0;MJ0<= 0;T0 <= 0;T1 <= 0;T2 <=0;S5 <= 0;S4 <=0;S3<= 0;S2<= 0;S1<= 0;S0<= 0;OP4<= 0;OP3 <= 0;OP2 <= 0;OP1 <= 0;OP0 <= 0;
 			MOV  <= 1;
-			#50
+			
 		    if(ir[24] == 1 && ir[21]==0)
 				nextS = 6'd1;
 			else if(ir[24] == 0 || (ir[24] == 1 && ir[21]==1))
@@ -385,7 +371,7 @@ always@(state)
 			RW	 	 <= 1;
 			MOV	 	 <= 1;
 			MI1 	 <= 1;
-			#50
+			
 			nextS    = 6'd35;
 		end	
 		else if (state == 6'd45) 
@@ -397,7 +383,7 @@ always@(state)
 			E		<= 1;
 			T1 		<= 1; 
 			T0		<= 1;
-			#50
+			
 			nextS   = 6'd43;
 		end	
 		else if (state == 6'd46) 
@@ -408,7 +394,7 @@ always@(state)
 			MD 	     <= 1;
 			MI1		 <= 1;
 			OP1	     <= 1;
-			#50
+			
 			if(ir[20] == 0)
 				nextS = 6'd41; 
 			else 
@@ -427,8 +413,6 @@ always@(state)
 			MD 	     <= 1;
 			MI1		 <= 1;
 			OP1	     <= 1;
-			
-			#50
 			if(ir[20] == 0)
 				nextS = 6'd41; 
 			else 
@@ -448,7 +432,6 @@ always@(state)
 			MD     	 <= 1;
 			MI1		 <= 1;
 			OP1 	 <= 1;
-			#50
 			nextS    = 1;
 		end
 		else if (state == 6'd49) 
@@ -460,7 +443,6 @@ always@(state)
 			MD     	 <= 1;
 			MI1		 <= 1;
 			OP1 	 <= 1;
-			#50
 			nextS    = 1;
 		end
 		else if(state == 6'd50)
@@ -476,7 +458,7 @@ always@(state)
 				OP4       <= 1; 
 				OP1       <= 1;
 				OP0       <= 1; 
-				#50
+				
 				if(ir[24] == 1 && ir[21]==0)
 					nextS = 6'd1;
 				else if(ir[24] == 0 || (ir[24] == 1 && ir[21]==1))
