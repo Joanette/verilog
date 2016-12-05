@@ -24,11 +24,11 @@ reg [1:0] typeData;
 reg [7:0]data;
 integer fd, code,i; 
 //instanitate a ram: 
-ram256x8 ram(DaIn, DaOut, rw, address, mv, moc,enable,typeData);
+ram256x8 ram(DaIn, DaOut, rw, address, mv, moc,typeData);
 //iteration index
 reg [8:0] j;
 initial begin
-		fd = $fopen("mifile.dat", "r");
+		fd = $fopen("IR.dat", "r");
 		i =0;
 		    while(!($feof(fd))) 
 			begin 
@@ -44,18 +44,18 @@ initial begin
   mv = 0;
   address=0;   
   DaIn=0; 
-  typeData =0;
+  typeData = 2;
   //Initializing 
   $display("***=============Testing precharged memory=============***");
   	rw = READ; 
 	address = 0;
 	enable =0;
-repeat(8) 
+repeat(12) 
 	begin 
-	 #5 address = address +1;
-     enable = ~enable; 
+	 #5 address = address + 4;
+     enable = ~enable;
 	 mv = 1; //memory operation valid
-	 #5 mv =0;
+	 #5 mv = 0;
 	end
 $display("***=============Testing bytess=============***");
   enable=0;
