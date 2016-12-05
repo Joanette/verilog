@@ -28,7 +28,7 @@ module CUtb;
 	//instanitate a controlUnit
 	controlUnit cu(CLR,CLK,moc, ir, RFLd, IRLd, MARLd, MDRLd, RW, MOV, typeData,px, FRLd, MA1, MA0, MB1, MB0, MC2, MC1, MC0, MD, ME,MF1, MF0, MG,MH, MI1,MI0,MJ1,MJ0, E, T2, T1,T0,S5,S4,S3,S2,S1,S0, OP4, OP3, OP2, OP1, OP0);	
 	initial begin
-		ir[31:0] = 32'b11100111110100010010000000000000;
+		ir[31:0] = 32'b11100101110100010011000000000010;
 		CLR = 1;
 		moc = 1; 
 		CLK = 1;
