@@ -34,3 +34,15 @@ always@(CLK)
 			Qs<=Ds;
 	end
 endmodule
+
+module FDR (FDRLd, CLK, Ds, Qs); 
+input FDRLd; 
+input CLK;
+input Ds[3:0]; 
+output reg Qs [3:0]; 
+always@(CLK)
+	begin 
+		if(MDRLd)
+			Qs <= Ds;
+	end
+endmodule
