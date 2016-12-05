@@ -68,13 +68,13 @@ module register_file_test;
 				d_select = d_select + 1;
 			end
 		end
-		$display("\nDisplaying values stored in Registers");
+		//$display("\nDisplaying values stored in Registers");
 
 		repeat(16) begin
-			$display("Value stored in Register%0d is: %h\n", index, w1[index]);
+			//$display("Value stored in Register%0d is: %h\n", index, w1[index]);
 			index = index + 1;
 		end	
-		$display("-----------------------------------------------------------------------------------------------");
+		//$display("-----------------------------------------------------------------------------------------------");
 		m1_select = 'b0000;
 		m2_select = 'b1111;
 		repeat (30) begin
@@ -84,7 +84,7 @@ module register_file_test;
 				m2_select = m2_select - 1;
 			end
 		end
-		$display("-----------------------------------------------------------------------------------------------");
+		//$display("-----------------------------------------------------------------------------------------------");
 	end
-	initial $monitor("|   mux1 sel = %b   |   mux1 out = %h   | mux2 sel = %b   |   mux2 out = %h   |", m1_select, w2, m2_select,w3);
+	//initial $monitor("|   mux1 sel = %b   |   mux1 out = %h   | mux2 sel = %b   |   mux2 out = %h   |", m1_select, w2, m2_select,w3);
 endmodule

@@ -2,7 +2,7 @@
 */
 module ram256x8 (DataIn, DataOut, rw, address, mv, moc, typeData);
 input [31:0] DataIn;//1 byte
-input [7:0] address;
+input [31:0] address;
 input rw;
 output reg moc; //Handshaking
 input mv;//Handshaking

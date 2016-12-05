@@ -1,4 +1,4 @@
-module controlUnit (CLK,CLR,moc, ir, RFLd, IRLd, MARLd, MDRLd, RW, MOV, typeData,px, FRLd, MA1, MA0, MB1, MB0, MC2, MC1, MC0, MD, ME,MF1, MF0, MG,MH, MI1,MI0,MJ1,MJ0, E, T2, T1,T0,S5,S4,S3,S2,S1,S0, OP4, OP3, OP2, OP1, OP0);
+module controlUnit (CLK,CLR,cond, moc, ir, RFLd, IRLd, MARLd, MDRLd, RW, MOV, typeData,px, FRLd, MA1, MA0, MB1, MB0, MC2, MC1, MC0, MD, ME,MF1, MF0, MG,MH, MI1,MI0,MJ1,MJ0, E, T2, T1,T0,S5,S4,S3,S2,S1,S0, OP4, OP3, OP2, OP1, OP0);
 parameter DATAPSHIFTER = 3'b000; 
 parameter DATAPIMMEDIATE = 3'b001; 
 parameter BRANCH = 3'b101;
@@ -35,7 +35,7 @@ output reg E;
 output reg S5,S4,S3,S2,S1,S0, OP4, OP3, OP2, OP1, OP0;
 reg [6:0] state;
 reg [6:0] nextS;
-reg cond; 
+input cond; 
 input CLK;
 input CLR;
 input [31:0] ir;
@@ -55,7 +55,7 @@ always@(state)
 		begin
 			RFLd <= 0;IRLd<= 0;MARLd<= 0;MDRLd<= 0;E = 0;RW<= 0;MOV <=0;typeData <=0;px<= 4'b0000;FRLd<=0;MA1<=0;MA0<= 0;MB1<= 0;MB0<=0;MC2<= 0;MC1<= 0;MC0<= 0;MD <= 0;ME<= 0;MF1<=0;MF0<= 0;MG <= 0;MH<=0;MI1<=0;MI0<= 0;MJ1 <=0;MJ0<= 0;T0 <= 0;T1 <= 0;T2 <=0;S5 <= 0;S4 <=0;S3<= 0;S2<= 0;S1<= 0;S0<= 0;OP4<= 0;OP3 <= 0;OP2 <= 0;OP1 <= 0;OP0 <= 0;
 			nextS = 1;
-		    $display("current_state: %d, nextS: %d \n", state, nextS);
+		    //$display("current_state: %d, nextS: %d \n", state, nextS);
 		end
 		else if (state == 6'd1) 
 		begin
@@ -65,7 +65,7 @@ always@(state)
 			MD  	 <= 1;
 			OP4      <= 1;
 			nextS = 6'd2;
-			$display("current_state: %d, nextS: %d \n", state, nextS);
+			//$display("current_state: %d, nextS: %d \n", state, nextS);
 		end
 		else if (state == 6'd2) 
 		begin
@@ -79,7 +79,7 @@ always@(state)
 			OP4      <= 1; 
 			OP0      <= 1;
 			nextS   = 6'd3;
-			$display("current_state: %d, nextS: %d \n", state, nextS);
+			//$display("current_state: %d, nextS: %d \n", state, nextS);
 		end
 		else if (state == 6'd3)
 		begin
@@ -91,7 +91,7 @@ always@(state)
 				nextS = 6'd4;
 			else 
 				nextS = 6'd3;
-			$display("current_state: %d, nextS: %d \n", state, nextS);
+			//$display("current_state: %d, nextS: %d \n", state, nextS);
 		end
 		else if (state == 6'd4) 
 		begin
@@ -102,7 +102,7 @@ always@(state)
 				end
 			else
 				decodeIR;
-			$display("current_state: %d, nextS: %d \n", state, nextS);
+			//$display("current_state: %d, nextS: %d \n", state, nextS);
 		end	
 		else if (state == 6'd5) 
 		begin
@@ -125,7 +125,7 @@ always@(state)
 			FRLd	 <= 1;
 			MJ0 	 <= 1;	
 			nextS    = 1;
-			$display("current_state: %d, nextS: %d \n", state, nextS);
+			//$display("current_state: %d, nextS: %d \n", state, nextS);
 		end	
 		else if (state == 6'd7)
 		begin
@@ -136,7 +136,7 @@ always@(state)
 			MH  	 <= 1;
 			MI0		 <= 1;			
 			nextS    = 1;
-			$display("current_state: %d, nextS: %d \n", state, nextS);
+			//$display("current_state: %d, nextS: %d \n", state, nextS);
 		end	
 		else if (state == 6'd8) 
 		begin
@@ -156,7 +156,7 @@ always@(state)
 			OP1		 <= 1; 
 			OP0		 <= 1;
 			nextS  = 6'd9;
-			$display("current_state: %d, nextS: %d \n", state, nextS);
+			//$display("current_state: %d, nextS: %d \n", state, nextS);
 		end	
 		else if (state == 6'd9)
 		begin
@@ -170,7 +170,7 @@ always@(state)
 			S2 	 <= 1; 
 			OP2  <= 1; 
 			nextS = 6'd1;
-			$display("current_state: %d, nextS: %d \n", state, nextS);
+			//$display("current_state: %d, nextS: %d \n", state, nextS);
 		end
 		else if(state == 6'd10)
 		begin
@@ -184,7 +184,7 @@ always@(state)
 			S2   <= 1; 
 			OP2  <= 1;
 			nextS = 6'd8;
-			$display("current_state: %d, nextS: %d \n", state, nextS);
+			//$display("current_state: %d, nextS: %d \n", state, nextS);
 		end
 		else if (state == 6'd33) 
 		begin
@@ -203,7 +203,7 @@ always@(state)
 					else if(ir[20]==1 && ir[22] ==1)
 						nextS = 6'd44; 
 				end
-			$display("current_state: %d, nextS: %d \n", state, nextS);
+			//$display("current_state: %d, nextS: %d \n", state, nextS);
 		end	
 		else if (state == 6'd34) 
 		begin
@@ -228,7 +228,7 @@ always@(state)
 			nextS = 6'd50; 
 			else if(ir[20]==1 && ir[22]==1)
 			nextS = 6'd36; 
-			$display("current_state: %d, nextS: %d \n", state, nextS);
+			//$display("current_state: %d, nextS: %d \n", state, nextS);
 		end	
 		else if (state == 6'd36) 
 		begin
@@ -259,7 +259,7 @@ always@(state)
 							nextS = 6'd49;
 					end
 				end
-			$display("current_state: %d, nextS: %d \n", state, nextS);
+			//$display("current_state: %d, nextS: %d \n", state, nextS);
 		end	
 		else if (state == 6'd37) 
 		begin
@@ -380,7 +380,7 @@ always@(state)
 			MI1 	 <= 1;
 			
 			nextS    = 6'd35;
-			$display("current_state: %d, nextS: %d \n", state, nextS);
+			//$display("current_state: %d, nextS: %d \n", state, nextS);
 		end	
 		else if (state == 6'd45) 
 		begin
@@ -413,7 +413,7 @@ always@(state)
 		end	
 		else if (state == 6'd47) 
 		begin
-		$display("current_state: %d, nextS: %d \n", state, nextS);
+		//$display("current_state: %d, nextS: %d \n", state, nextS);
 		RFLd <= 0;IRLd<= 0;MARLd<= 0;MDRLd<= 0;E = 0;RW<= 0;MOV <=0;typeData <=0;px<= 4'b0000;FRLd<=0;MA1<=0;MA0<= 0;MB1<= 0;MB0<=0;MC2<= 0;MC1<= 0;MC0<= 0;MD <= 0;ME<= 0;MF1<=0;MF0<= 0;MG <= 0;MH<=0;MI1<=0;MI0<= 0;MJ1 <=0;MJ0<= 0;T0 <= 0;T1 <= 0;T2 <=0;S5 <= 0;S4 <=0;S3<= 0;S2<= 0;S1<= 0;S0<= 0;OP4<= 0;OP3 <= 0;OP2 <= 0;OP1 <= 0;OP0 <= 0;
 			MARLd    <= 1;
 			MD 	     <= 1;
@@ -426,7 +426,7 @@ always@(state)
 				nextS = 6'd34;
 			else if(ir[20]==1 && ir[22] ==1)
 				nextS = 6'd44; 
-			$display("current_state: %d, nextS: %d \n", state, nextS);
+			//$display("current_state: %d, nextS: %d \n", state, nextS);
 		end
 		else if (state == 6'd48) 
 		begin
@@ -484,7 +484,7 @@ always@(state)
 						end
 					end		
 			end
-		$display("current_state: %d, nextS: %d \n", state, nextS);
+		//$display("current_state: %d, nextS: %d \n", state, nextS);
 	end
 	
 	task decodeIR;

@@ -1,14 +1,16 @@
-module MUXA(out,ir,MA);
+module MUXA(out,ir,px,MA);
 output reg [3:0] out;
-input  [32:0] ir;
+input  [31:0] ir;
+input [3:0] px;
 input  [1:0] MA;
 always @ (MA)
 	  begin
 			case(MA)
 			2'd0: 
 				out = ir[19:16];
-			2'd1: 
-				out = ir[15:12];
+			2'd1:
+
+				out = ir[15:12] + px[3:0];
 			2'd2:
 				out = 4'd15;
 			endcase
@@ -34,16 +36,16 @@ input [31:0] L2;
 		end
 endmodule
 
-module MUXC(outC,ir,L0,MC);
+module MUXC(outC,ir,px,MC);
 output reg [3:0] outC;
-input [3:0] L0;
-input [3:0]MC; 
+input [3:0] px;
+input [2:0]MC; 
 input [31:0] ir;
 	always @(MC)
 		begin 
 		case(MC)
 		 3'd0: 
-			outC = L0;
+			outC = px[3:0]+ir[15:12];
 		 3'd1: 
 			outC = ir[19:12];
 		 3'd2:
@@ -57,8 +59,8 @@ input [31:0] ir;
 endmodule
 
 module MUXD (outD, OP, ir, MD); 
-output reg [3:0] outD; 
-input  [3:0] OP; 
+output reg [4:0] outD; 
+input  [4:0] OP; 
 input  [31:0] ir;
 input  MD;
 always @(MD)
@@ -73,9 +75,9 @@ always @(MD)
 endmodule
 
 module MUXE(outE, L1, L0, ME); 
-output reg [3:0] outE;
-input  [3:0] L1;
-input  [3:0] L0; 
+output reg [31:0] outE;
+input  [31:0] L1;
+input  [31:0] L0; 
 input  ME;
 always @(ME)
 	begin 
@@ -88,18 +90,24 @@ always @(ME)
 	end 
 endmodule
 
-module MUXF(outF, L1, L0, MF);
+module MUXF(outF, L3,L2,L1,L0, MF);
 output reg [31:0] outF; 
+input  [31:0] L3;
+input  [31:0] L2; 
 input  [31:0] L1;
 input  [31:0] L0; 
 input  MF; 
 always @(MF)
 	begin 
 		case(MF) 
-		1'd0:
+		2'd0:
 			outF = L0; 
-		1'd1: 
+		2'd1: 
 			outF = L1;
+		2'd2: 
+			outF = L2;
+		2'd3: 
+			outF = L3;
 		endcase
 	end
 endmodule
@@ -135,17 +143,18 @@ always @(MH)
 		endcase
 	end
 endmodule
-module MUXI(outI, T, MI); 
-output reg [3:0] outI; 
+module MUXI(outI,T,IR0,MI); 
+output reg [2:0] outI; 
 input  [1:0] MI;
-input  [3:0] T; 
+input [2:0] IR0;
+input  [2:0] T; 
 always @(MI) 
 	begin 
 		case(MI)
 			2'd0: 
-				outI = 4'd7;
+				outI = 3'd3;
 			2'd1:
-				outI = 4'd7; 
+				outI = IR0; 
 			2'd2:
 				outI = T;
 		endcase
