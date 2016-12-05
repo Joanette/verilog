@@ -200,7 +200,7 @@ always@(state)
 				begin
 					if(ir[20]==1 && ir[22] ==0)
 						nextS = 6'd34;
-					else if(ir[20]==1 && ir[22] ==0)
+					else if(ir[20]==1 && ir[22] ==1)
 						nextS = 6'd44; 
 				end
 			$display("current_state: %d, nextS: %d \n", state, nextS);
