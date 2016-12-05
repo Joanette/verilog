@@ -404,14 +404,11 @@ always@(state)
 			OP1	     <= 1;
 			
 			if(ir[20] == 0)
-				nextS = 6'd41; 
-			else 
-				begin
-					if(ir[20]==1 && ir[22] ==0)
-						nextS = 6'd34;
-					else if(ir[20]==1 && ir[22] ==0)
-						nextS = 6'd44; 
-				end
+				nextS = 6'd41;
+			else if(ir[20]==1 && ir[22] ==0)
+				nextS = 6'd34;
+			else if(ir[20]==1 && ir[22] ==1)
+				nextS = 6'd44; 
 			
 		end	
 		else if (state == 6'd47) 
@@ -422,7 +419,7 @@ always@(state)
 			MD 	     <= 1;
 			MI1		 <= 1;
 			OP1	     <= 1;
-			$display("ir[20] = %d and ir[22] = %d", ir[20], ir[22]);
+			//$display("ir[20] = %d and ir[22] = %d", ir[20], ir[22]);
 			if(ir[20] == 0)
 				nextS = 6'd41;
 			else if(ir[20]==1 && ir[22] ==0)
