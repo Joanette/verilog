@@ -10,7 +10,7 @@ output reg MARLd;
 output reg MDRLd;
 output reg RW;
 output reg MOV;
-output reg typeData; 
+output reg [1:0]typeData; 
 output reg [0:3]px; 
 output reg FRLd;
 output reg MA1;

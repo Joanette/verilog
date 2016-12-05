@@ -9,12 +9,11 @@ parameter READ = 1'b1;
 parameter BYTE = 2'b00; 
 parameter HALFWORD = 2'b01;
 parameter WORD 	 = 2'b10; 
-parameter DOUBLEWORD = 2'b11;
 
 //RAM parameters:
-wire[63:0] DaOut; //1 byte
+wire[31:0] DaOut; //1 byte
 wire moc;		
-reg [63:0] DaIn;
+reg [31:0] DaIn;
 reg [7:0] address; 
 reg rw;
 reg mv; 
@@ -42,7 +41,7 @@ end
 initial begin
   //initializing
   mv = 0;
-  address=0;   
+  address=0;
   DaIn=0; 
   typeData = 2;
   //Initializing 
@@ -130,31 +129,6 @@ $display("=============Writing bytess=============");
 	begin
      enable = ~enable; 
 	 address = address +4;	
-	 mv = 1; //memory operation valid
-	 #5 mv =0;
-	end
-	$display("***=============Testing double words=============***");
-    $display("=============Writing  double words=============");
-	DaIn =64'hcafefeafbebeabee;
-  rw =WRITE;
-  typeData = DOUBLEWORD; 
-  address =0; 
-  repeat(2) 
-	begin 
-     enable = ~enable; 
-	 address = address + 8;
-	 DaIn = DaIn +1;
-	 mv = 1; //memory operation valid
-	 #5 mv =0;
-	end
-	$display("=============Readig double words=============");
-	rw = READ; 
-	address = 0;
-	enable =0;
-  repeat(2) 
-	begin 
-     enable = ~enable; 
-	 address = address +8;
 	 mv = 1; //memory operation valid
 	 #5 mv =0;
 	end
