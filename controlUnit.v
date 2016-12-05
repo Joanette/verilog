@@ -415,13 +415,10 @@ always@(state)
 			OP1	     <= 1;
 			if(ir[20] == 0)
 				nextS = 6'd41; 
-			else 
-				begin
-					if(ir[20]==1 && ir[22] ==0)
-						nextS = 6'd34;
-					else if(ir[20]==1 && ir[22] ==0)
-						nextS = 6'd44; 
-				end
+			else if(ir[20]==1 && ir[22] ==0)
+				nextS = 6'd34;
+			else if(ir[20]==1 && ir[22] ==0)
+				nextS = 6'd44; 
 		end
 		else if (state == 6'd48) 
 		begin
