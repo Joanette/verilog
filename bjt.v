@@ -129,7 +129,7 @@ initial begin
         $fclose(fd);
 end
 initial begin
-    CLK = 1;
+         CLK = 1;
 		#5 CLK <= !CLK;//1
 		//2
 		#10 CLK = ~CLK;
@@ -157,5 +157,5 @@ initial begin
 		#10 CLK = ~CLK;		
 end
 initial 
-$monitor("CLK= %d, MDROut = %d, W1 = %d, result= %d", CLK, MDROut, w1[5], alu.result); 
+$monitor("CLK= %d, present state = %d,MDROut = %d, W1 = %d, result= %d, instruction r = %d " , CLK, cu.state, MDROut, w1[5], alu.result, IROut); 
 endmodule

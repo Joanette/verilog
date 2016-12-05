@@ -11,7 +11,7 @@ output reg MDRLd;
 output reg RW;
 output reg MOV;
 output reg [1:0]typeData; 
-output reg [0:3]px; 
+output reg [3:0]px; 
 output reg FRLd;
 output reg MA1;
 output reg MA0;
@@ -92,6 +92,7 @@ always@(state)
 			else 
 				nextS = 6'd3;
 			//$display("current_state: %d, nextS: %d \n", state, nextS);
+
 		end
 		else if (state == 6'd4) 
 		begin
@@ -102,7 +103,8 @@ always@(state)
 				end
 			else
 				decodeIR;
-			//$display("current_state: %d, nextS: %d \n", state, nextS);
+			$display("current_state: %d, nextS: %d \n", state, nextS);
+			$display("cond = %d", cond);
 		end	
 		else if (state == 6'd5) 
 		begin
