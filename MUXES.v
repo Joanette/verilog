@@ -9,7 +9,6 @@ always @ (MA)
 			2'd0: 
 				out = ir[19:16];
 			2'd1:
-
 				out = ir[15:12] + px[3:0];
 			2'd2:
 				out = 4'd15;
@@ -96,7 +95,7 @@ input  [31:0] L3;
 input  [31:0] L2; 
 input  [31:0] L1;
 input  [31:0] L0; 
-input  MF; 
+input [1:0] MF; 
 always @(MF)
 	begin 
 		case(MF) 
@@ -106,8 +105,9 @@ always @(MF)
 			outF = L1;
 		2'd2: 
 			outF = L2;
-		2'd3: 
+		2'd3: begin
 			outF = L3;
+		end
 		endcase
 	end
 endmodule

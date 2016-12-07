@@ -16,6 +16,7 @@ module shifter_extender(output reg [31:0] shifter_out, input [31:0] shifter_in, 
 			endcase
 		end
 		else if (E == 1) begin
+			$display("shifter_in value = %h", shifter_in);
 			case(t)
 				0: begin
 					if (shifter_in[7] == 1) begin
@@ -35,7 +36,7 @@ module shifter_extender(output reg [31:0] shifter_out, input [31:0] shifter_in, 
 					end
 				end
 				3: shifter_out = {16'b0000000000000000, shifter_in[15:0]};
-			endcase			
+			endcase
 		end
 	end
 endmodule

@@ -107,8 +107,8 @@ always@(posedge CLK, state)
 				end
 			else
 				decodeIR();
-			$display("current_state: %d, nextS: %d \n", state, nextS);
-			$display("cond = %d", cond);
+			// $display("current_state: %d, nextS: %d \n", state, nextS);
+			// $display("cond = %d", cond);
 		end	
 		else if (state == 6'd5) 
 		begin
@@ -116,6 +116,8 @@ always@(posedge CLK, state)
 			RFLd     <= 1;
 			MB0		 <= 1; 
 			MC2 	 <= 1;
+			MF1 	 <= 1;
+			MF0 	 <= 1;
 			MD       <= 1;
 			T0 		 <= 1;
 			E 		 <= 1;
@@ -526,6 +528,6 @@ always@(posedge CLK, state)
 					nextS = 6'd37;
 			end
 		endcase
-		$display("after decodeIR next state = %d, instruction[27:25]= %b", nextS, ir[27:25]);
+		// $display("after decodeIR next state = %d, instruction[27:25]= %b", nextS, ir[27:25]);
 	endtask
 endmodule
