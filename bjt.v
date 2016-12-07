@@ -1,7 +1,6 @@
 module cpu_test;
 //*** Universal Clock *****;
 reg CLK;
-reg CLR;
 //******* Control Unit ***********: 
 //Parameters:
 parameter DATAPSHIFTER = 3'b000; 
@@ -12,7 +11,8 @@ parameter LANDSREG= 3'b011;
 //Wires:
  wire RFLd,IRLd,MARLd, MDRLd,RW,MOV, FRLd,MA1,MA0,MB1,MB0,MC2,MC1,MC0,MD,ME,MG,MF0,MF1,MH,MI0,MI1,MJ0, MJ1, T2,T1,T0, E, S5,S4,S3,S2,S1,S0, OP4, OP3, OP2, OP1, OP0; 
  wire [1:0]typeData;
- wire [3:0]px; 
+ wire [3:0]px;
+ wire CLR;
 // reg  [31:0]ir;	
 //*******RAM parameters***********:
 wire[31:0] DaOut;
@@ -113,7 +113,7 @@ IR instructionRegister(IRLd,CLK,DaOut,IROut);
 generate
 	genvar k; 
 	for (k = 0; k < 16; i = k + 1) begin
-		register r (rf_out[k], result, CLK, w0[k],reset);
+		register r (rf_out[k], result, CLK, w0[k],CLR);
 	end
 endgenerate
 
@@ -121,30 +121,26 @@ initial begin
     fd = $fopen("IR.dat", "r");
     i = 0;
         while(!($feof(fd))) 
-        begin 
+        begin
             code = $fscanf(fd, "%b", data);
             ram.mem[i] = data;
             i = i+1;
-        end        
+        end
         $fclose(fd);
-		//input_data = 32'd0;
-		d_select = 'b0000;
 		first_time_flag = 1'b1;
-		CLR = 1;
 		cond = 1;
 		#5 CLK = 0;
-		reset = 1;
 		repeat (24) 
 		begin	
 			#5 CLK = ~CLK;
-			if(first_time_flag) 
-			begin
-			  reset = 0;
-			  first_time_flag = 0;
-			end	
+			// if(first_time_flag) 
+			// begin
+			//   reset = 0;
+			//   first_time_flag = 0;
+			// end	
 		end
 end
 
 initial 
-$monitor(" || CLK = %d    present state = %d       next state = %d || \n || RFLd  =  %d       IRLd = %d       MARLd = %d ||\n || MDRLd = %d        RW = %d           MOV = %d ||\n || FRLd = %d       MA1 = %d        MA0 = %d ||\n || MB1 = %d        MB0 = %d       MC2 = %d || \n|| MC1 = %d       MC0 = %d        MD = %d ||\n ||  ME = %d       MG = %d       MF0 = %d ||\n || MF1 = %d       MH = %d       MI0 = %d ||\n || MI1 = %d      MJ0 = %d       MJ1 = %d ||\n || T2 = %d       T1 = %d       T0 = %d || \n || E = %d       S5 = %d       S4 = %d ||\n || S3 = %d       S2 = %d       S1 = %d ||\n || S0 = %d       OP4 = %d       OP3 = %d ||\n || OP2 = %d       OP1= %d       OP0 = %d|| \n || MAOUT = %d       result = %d       instruction r = %h ||\n || MAROut = %d       memoria = %h        PA = %d ||\n| | END OF:     present state = %d       next state = %d|| " ,CLK, cu.state,cu.nextS, RFLd,IRLd,MARLd, MDRLd,RW,MOV, FRLd,MA1,MA0,MB1,MB0,MC2,MC1,MC0,MD,ME,MG,MF0,MF1,MH,MI0,MI1,MJ0, MJ1, T2,T1,T0, E, S5,S4,S3,S2,S1,S0, OP4, OP3, OP2, OP1, OP0, MAOUT, alu.result, IROut, MAROut, ram.mem[4],PA,cu.state,cu.nextS);
+$monitor(" || CLK   = %d    CLR   = %d   present state = %d       next state = %d || \n || RFLd  = %d       IRLd = %d       MARLd = %d ||\n || MDRLd = %d         RW = %d         MOV = %d ||\n || FRLd  = %d        MA1 = %d         MA0 = %d ||\n || MB1   = %d        MB0 = %d         MC2 = %d || \n || MC1   = %d        MC0 = %d          MD = %d ||\n || ME    = %d         MG = %d         MF0 = %d ||\n || MF1   = %d         MH = %d         MI0 = %d ||\n || MI1   = %d        MJ0 = %d         MJ1 = %d ||\n || T2    = %d         T1 = %d          T0 = %d || \n || E     = %d         S5 = %d         S4  = %d ||\n || S3    = %d         S2 = %d         S1  = %d ||\n || S0    = %d        OP4 = %d         OP3 = %d ||\n || OP2   = %d        OP1 = %d         OP0 = %d || \n || MAOUT =%d     result = %d  instruction r = %h ||\n || MAROut = %d  memoria =  %h  PA   =  %d ||\n || END OF:     present state = %d       next state = %d || " , CLK, CLR, cu.state,cu.nextS, RFLd,IRLd,MARLd, MDRLd,RW,MOV, FRLd,MA1,MA0,MB1,MB0,MC2,MC1,MC0,MD,ME,MG,MF0,MF1,MH,MI0,MI1,MJ0, MJ1, T2,T1,T0, E, S5,S4,S3,S2,S1,S0, OP4, OP3, OP2, OP1, OP0, MAOUT, alu.result, IROut, MAROut, ram.mem[4],PA,cu.state,cu.nextS);
 endmodule

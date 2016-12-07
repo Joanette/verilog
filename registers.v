@@ -18,7 +18,7 @@ output reg [31:0] Qs;
 always@(posedge CLK)
 	begin
 		if(MARLd) begin
-		  Qs = Ds;
+		  Qs <= Ds;
 		end
 	end
 
