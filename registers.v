@@ -17,8 +17,9 @@ input[31:0] Ds;
 output reg [31:0] Qs; 
 always@(posedge CLK)
 	begin
-		if(MARLd)
-			Qs <= Ds;  
+		if(MARLd) begin
+		  Qs = Ds;
+		end
 	end
 
 endmodule
