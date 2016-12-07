@@ -16,10 +16,11 @@ module register (output reg [31:0] Q, input [31:0] D, input clk, input ld, input
 	always @ (clk, reset)
 		if(reset) begin
 			Q = 32'd0;
-		end	
+		end
 		else if(ld && clk) begin
 			Q = D;
 			$display("Data inputted to register= %d",D);
+			$display("Data stored to register= %d",Q);
 		end
 		else if(clk) begin
 			Q = Q;
