@@ -1,6 +1,6 @@
 /*Fase 1 de proyecto memoria RAM 
 */
-module ram256x8 (DataIn, DataOut, rw, address, mv, moc, typeData);
+module ram256x8 (DataIn, DataOut, rw, address, mov, moc, typeData);
 input [31:0] DataIn;//1 byte
 input [31:0] address;
 input rw;
