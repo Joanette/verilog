@@ -8,7 +8,7 @@ always @(A, B, carry, opcode)
 		case (opcode)
 			5'b00000:	//AND Logical 
 				begin
-					result = A && B;
+					result = A & B;
 					FlagC = carry;
 				end
 				
@@ -59,7 +59,7 @@ always @(A, B, carry, opcode)
 				end
 			5'b01000:	//Test
 				begin
-					{FlagZ, FlagN} =  A && B;
+					{FlagZ, FlagN} =  A & B;
 				end
 			5'b01001:	//Test Equivalence
 				begin
@@ -75,7 +75,7 @@ always @(A, B, carry, opcode)
 				end
 			5'b01100:	//OR Logical
 				begin
-					result = A || B;
+					result = A | B;
 					FlagC = carry;
 				end
 			5'b01101:	//Move
@@ -84,7 +84,7 @@ always @(A, B, carry, opcode)
 				end
 			5'b01110:	//Bit Clear
 				begin
-					result = A && !B;
+					result = A & !B;
 				end
 			5'b01111:	//Move Not
 				begin

@@ -128,7 +128,7 @@ initial begin
 		first_time_flag = 1'b1;
 		cond = 1;
 		#5 CLK = 0;
-		repeat (24) 
+		repeat (64) 
 		begin	
 			#5 CLK = ~CLK;
 			// if(first_time_flag) 
@@ -140,5 +140,5 @@ initial begin
 end
 
 initial 
-$monitor(" || CLK   = %d    CLR   = %d   present state = %d       next state = %d || \n || RFLd  = %d       IRLd = %d       MARLd = %d ||\n || MDRLd = %d         RW = %d         MOV = %d ||\n || FRLd  = %d        MA1 = %d         MA0 = %d ||\n || MB1   = %d        MB0 = %d         MC2 = %d || \n || MC1   = %d        MC0 = %d          MD = %d ||\n || ME    = %d         MG = %d         MF0 = %d ||\n || MF1   = %d         MH = %d         MI0 = %d ||\n || MI1   = %d        MJ0 = %d         MJ1 = %d ||\n || T2    = %d         T1 = %d          T0 = %d || \n || E     = %d         S5 = %d         S4  = %d ||\n || S3    = %d         S2 = %d         S1  = %d ||\n || S0    = %d        OP4 = %d         OP3 = %d ||\n || OP2   = %d        OP1 = %d         OP0 = %d || \n || MAOUT =%d     result = %b  instruction r = %h ||\n || MAROut = %d  memoria =  %h  PA   =  %d Mux_PBOut   =  %h ||\n || END OF:     present state = %d       next state = %d, shifter_out = %h || " , CLK, CLR, cu.state,cu.nextS, RFLd,IRLd,MARLd, MDRLd,RW,MOV, FRLd,MA1,MA0,MB1,MB0,MC2,MC1,MC0,MD,ME,MG,MF0,MF1,MH,MI0,MI1,MJ0, MJ1, T2,T1,T0, E, S5,S4,S3,S2,S1,S0, OP4, OP3, OP2, OP1, OP0, MAOUT, alu.result, IROut, MAROut, ram.mem[4],PA, Mux_PBOut,cu.state,cu.nextS, shifter_out);
+$monitor(" || CLK   = %d    CLR   = %d   present state = %d       next state = %d || \n || RFLd  = %d       IRLd = %d       MARLd = %d ||\n || MDRLd = %d         RW = %d         MOV = %d ||\n || FRLd  = %d        MA1 = %d         MA0 = %d ||\n || MB1   = %d        MB0 = %d         MC2 = %d || \n || MC1   = %d        MC0 = %d          MD = %d ||\n || ME    = %d         MG = %d         MF0 = %d ||\n || MF1   = %d         MH = %d         MI0 = %d ||\n || MI1   = %d        MJ0 = %d         MJ1 = %d ||\n || T2    = %d         T1 = %d          T0 = %d || \n || E     = %d         S5 = %d         S4  = %d ||\n || S3    = %d         S2 = %d         S1  = %d ||\n || S0    = %d        OP4 = %d         OP3 = %d ||\n || OP2   = %d        OP1 = %d         OP0 = %d || \n || MAOUT =%d     result = %b  instruction r = %h ||\n || MAROut = %d  PA =  %d Mux_PBOut =  %b Mux_COut = %h ||\n || END OF:     present state = %d  next state = %d, shifter_in = %h, shifter_out = %h, MDROut = %h || DaOut = %h" , CLK, CLR, cu.state,cu.nextS, RFLd,IRLd,MARLd, MDRLd,RW,MOV, FRLd,MA1,MA0,MB1,MB0,MC2,MC1,MC0,MD,ME,MG,MF0,MF1,MH,MI0,MI1,MJ0, MJ1, T2,T1,T0, E, S5,S4,S3,S2,S1,S0, OP4, OP3, OP2, OP1, OP0, MAOUT, alu.result, IROut, MAROut,PA, Mux_PBOut,Mux_COut,cu.state,cu.nextS, Mux_FOut, shifter_out, MDROut, DaOut);
 endmodule

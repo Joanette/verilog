@@ -46,8 +46,6 @@ input [31:0] L2;
 			end
 			2'd3: begin
 				outPB = 32'd5;
-				$display("Arrived at L3"); 
-				$display("out = %d", outPB);
 			end	
 			endcase
 		end
@@ -70,7 +68,7 @@ input [31:0] ir;
 		 3'd3:
 			outC = 4'b1111; 
 		 3'd4: 
-			outC = 4'b0001;
+			outC = 4'b0111;
 		 endcase
 		end
 endmodule
@@ -170,7 +168,7 @@ always @(MI, T, IR0)
 	begin 
 		case(MI)
 			2'd0: 
-				outI = 3'd3;
+				outI = 3'd1;
 			2'd1:
 				outI = IR0; 
 			2'd2:
@@ -189,7 +187,7 @@ always @(MJ, ir)
 			2'd0: 
 				outJ = ir[3:0];
 			2'd1:
-				outJ = 4'd1;
+				outJ = 4'd7;
 			2'd2:
 				outJ = ir[15:12];
 		endcase

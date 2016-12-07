@@ -1,6 +1,7 @@
 // output reg [31:0] shifter_out, output reg cout, input [31:0] shifter_in, input [5:0] shift_value, input [2:0] type, input cin, input E
 module shifter_extender(output reg [31:0] shifter_out, input [31:0] shifter_in, input [5:0] shift_value, input [2:0] t, input E);
 	reg [63:0] tmp;
+	reg newShiftValue;
 	always @(shifter_in, shift_value)
 	begin
 		if (E == 0) begin
@@ -13,6 +14,12 @@ module shifter_extender(output reg [31:0] shifter_out, input [31:0] shifter_in, 
 					tmp = {shifter_in, shifter_in} >> shift_value;
 					shifter_out = tmp[31:0];
  				end
+				4: begin
+					newShiftValue = shift_value * 2 ;
+					tmp = {shifter_in, shifter_in} >> newShiftValue;
+					shifter_out = tmp[31:0];
+					$display("Entered 2 time rotate right");
+				end
 			endcase
 		end
 		else if (E == 1) begin
