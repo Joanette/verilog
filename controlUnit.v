@@ -54,8 +54,8 @@ always@(posedge CLK, state)
 		if (state == 0) 
 		begin
 			RFLd <= 0;IRLd<= 0;MARLd<= 0;MDRLd<= 0;E = 0;RW<= 0;MOV <=0;typeData <=0;px<= 4'b0000;FRLd<=0;MA1<=0;MA0<= 0;MB1<= 0;MB0<=0;MC2<= 0;MC1<= 0;MC0<= 0;MD <= 0;ME<= 0;MF1<=0;MF0<= 0;MG <= 0;MH<=0;MI1<=0;MI0<= 0;MJ1 <=0;MJ0<= 0;T0 <= 0;T1 <= 0;T2 <=0;S5 <= 0;S4 <=0;S3<= 0;S2<= 0;S1<= 0;S0<= 0;OP4<= 0;OP3 <= 0;OP2 <= 0;OP1 <= 0;OP0 <= 0;
-			nextS <= 1;
 			CLR   <= 1;
+			nextS <= 1;
 		    //$display("current_state: %d, nextS: %d \n", state, nextS);
 		end
 		else if (state == 6'd1) 
@@ -496,7 +496,7 @@ always@(posedge CLK, state)
 	end
 	
 	task decodeIR();
-	$display("HERE IN decodeIR");
+	//$display("HERE IN decodeIR");
 	 case(ir[27:25])
 		 DATAPIMMEDIATE: 
 			nextS = 6'd5;

@@ -3,13 +3,15 @@ output reg [3:0] out;
 input  [31:0] ir;
 input [3:0] px;
 input  [1:0] MA;
-always @ (MA)
+always @ (MA,  ir, px)
 	  begin
 			case(MA)
 			2'd0: 
 				out = ir[19:16];
-			2'd1:
+			2'd1:  begin
 				out = ir[15:12] + px[3:0];
+				$display("Mux A Value = %h", out);		  
+			end
 			2'd2:
 				out = 4'd15;
 			endcase
@@ -17,20 +19,36 @@ always @ (MA)
 endmodule
 
 module MUXPB(outPB,L0,L1,L2,MB);
-output reg [31:0] outPB; 
+output reg [31:0] outPB;
 input [1:0] MB;
 input [31:0] L0;
-input [31:0] L1; 
+input [31:0] L1; //shifter_out 
 input [31:0] L2; 
-	always @(MB)
+	always @(MB, L0, L1, L2)
 		begin 
+		$display("MB value = %h ", MB);
 			case(MB)
-			2'd0: 
-				outPB = L0; 
-			2'd1: 
+			2'd0: begin
+				outPB = L0;
+				$display("Arrived at L0");
+				$display("out = %d", outPB);	 			  
+			end
+			2'd1:
+			begin 
 				outPB = L1;
-			2'd2: 
-				outPB = L2; 
+				$display("Arrived at L1");
+				$display("out = %d", outPB);	
+			end
+			2'd2: begin
+				outPB = L2;
+				$display("Arrived at L2"); 
+				$display("out = %d", outPB);	
+			end
+			2'd3: begin
+				outPB = 32'd5;
+				$display("Arrived at L3"); 
+				$display("out = %d", outPB);
+			end	
 			endcase
 		end
 endmodule
@@ -40,7 +58,7 @@ output reg [3:0] outC;
 input [3:0] px;
 input [2:0]MC; 
 input [31:0] ir;
-	always @(MC)
+	always @(MC,ir,px)
 		begin 
 		case(MC)
 		 3'd0: 
@@ -62,7 +80,7 @@ output reg [4:0] outD;
 input  [4:0] OP; 
 input  [31:0] ir;
 input  MD;
-always @(MD)
+always @(MD,OP, ir)
 	begin 
 		case(MD)
 		1'd0: 
@@ -78,7 +96,7 @@ output reg [31:0] outE;
 input  [31:0] L1;
 input  [31:0] L0; 
 input  ME;
-always @(ME)
+always @(ME,L1, L0)
 	begin 
 		case(ME) 
 		1'd0:
@@ -96,7 +114,7 @@ input  [31:0] L2;
 input  [31:0] L1;
 input  [31:0] L0; 
 input [1:0] MF; 
-always @(MF)
+always @(MF, L3, L2, L1, L0)
 	begin 
 		case(MF) 
 		2'd0:
@@ -117,7 +135,7 @@ output reg [31:0] outG;
 input  [31:0] L1;
 input  [31:0] L0;
 input  MG; 
-always @(MG)
+always @(MG, L0, L1)
 	begin 
 		case(MG)
 		1'd0: 
@@ -133,7 +151,7 @@ output reg [31:0] outH;
 input  [31:0] L1;
 input  [31:0] L0;
 input  MH; 
-always @(MH)
+always @(MH, L0, L1)
 	begin 
 		case(MH)
 		1'd0: 
@@ -148,7 +166,7 @@ output reg [2:0] outI;
 input  [1:0] MI;
 input [2:0] IR0;
 input  [2:0] T; 
-always @(MI) 
+always @(MI, T, IR0) 
 	begin 
 		case(MI)
 			2'd0: 
@@ -165,7 +183,7 @@ module MUXJ(outJ, ir, MJ);
 output reg [3:0] outJ; 
 input [1:0] MJ; 
 input [31:0] ir; 
-always @(MJ) 
+always @(MJ, ir) 
 	begin
 		case(MJ)
 			2'd0: 

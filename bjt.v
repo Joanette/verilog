@@ -85,8 +85,6 @@ MDR mdr (MDRLd, CLK, Mux_EOut , MDROut);
 //instanitate MUX A 
 MUXA muxa(MAOUT, IROut,px, {MA1, MA0});
 Mux_16_1 mux1 (PA, MAOUT, rf_out);
-//instanitate MUX B 
-MUXPB muxPB (Mux_PBOut, PB, Mux_HOut, MDROut, {MB1, MB0});
 //instanitate MUX C 
 MUXC muxc (Mux_COut, IROut, px, {MC2, MC1, MC0});
 binary_decoder d (w0, Mux_COut, RFLd);
@@ -95,16 +93,16 @@ MUXD muxd(Mux_DOut, {OP4, OP3, OP2, OP1, OP0}, IROut, MD);
 //instanitate MUX E 
 MUXE muxe(Mux_EOut,DaOut,result,ME); 
 //instanitate MUX F 
-MUXF muxf (Mux_FOut,IROut,MDROut,DaOut, PB, {MF0,MF1});
+MUXF muxf (Mux_FOut,IROut,MDROut,DaOut, PB, {MF1,MF0});
 //instanitate MUX G 
 MUXG muxg(Mux_GOut,MDROut, Mux_HOut , MG);
-//instanitate MUX H 
-MUXH muxh(Mux_HOut, shifter_out, 0 ,MH);
 //instanitate MUX j 
 MUXJ muxj(Mux_JOut, IROut, {MJ1,MJ0} );
 Mux_16_1 mux2 (PB, Mux_JOut, rf_out);
 //instanitate shifter 
 shifter_extender se(shifter_out, Mux_FOut, {S5, S4, S3, S2, S1, S0}, Mux_IOut, E);
+//instanitate MUX B 
+MUXPB muxPB (Mux_PBOut, PB, shifter_out, MDROut, {MB1, MB0});
 //instanitate MUX I 
 MUXI muxi (Mux_IOut, {T2, T1, T0}, {1'b0 ,IROut[6], IROut[5]}, {MI1, MI0});
 //instanitate ir 
@@ -142,5 +140,5 @@ initial begin
 end
 
 initial 
-$monitor(" || CLK   = %d    CLR   = %d   present state = %d       next state = %d || \n || RFLd  = %d       IRLd = %d       MARLd = %d ||\n || MDRLd = %d         RW = %d         MOV = %d ||\n || FRLd  = %d        MA1 = %d         MA0 = %d ||\n || MB1   = %d        MB0 = %d         MC2 = %d || \n || MC1   = %d        MC0 = %d          MD = %d ||\n || ME    = %d         MG = %d         MF0 = %d ||\n || MF1   = %d         MH = %d         MI0 = %d ||\n || MI1   = %d        MJ0 = %d         MJ1 = %d ||\n || T2    = %d         T1 = %d          T0 = %d || \n || E     = %d         S5 = %d         S4  = %d ||\n || S3    = %d         S2 = %d         S1  = %d ||\n || S0    = %d        OP4 = %d         OP3 = %d ||\n || OP2   = %d        OP1 = %d         OP0 = %d || \n || MAOUT =%d     result = %d  instruction r = %h ||\n || MAROut = %d  memoria =  %h  PA   =  %d Mux_FOut   =  %h ||\n || END OF:     present state = %d       next state = %d || " , CLK, CLR, cu.state,cu.nextS, RFLd,IRLd,MARLd, MDRLd,RW,MOV, FRLd,MA1,MA0,MB1,MB0,MC2,MC1,MC0,MD,ME,MG,MF0,MF1,MH,MI0,MI1,MJ0, MJ1, T2,T1,T0, E, S5,S4,S3,S2,S1,S0, OP4, OP3, OP2, OP1, OP0, MAOUT, alu.result, IROut, MAROut, ram.mem[4],PA, Mux_FOut,cu.state,cu.nextS);
+$monitor(" || CLK   = %d    CLR   = %d   present state = %d       next state = %d || \n || RFLd  = %d       IRLd = %d       MARLd = %d ||\n || MDRLd = %d         RW = %d         MOV = %d ||\n || FRLd  = %d        MA1 = %d         MA0 = %d ||\n || MB1   = %d        MB0 = %d         MC2 = %d || \n || MC1   = %d        MC0 = %d          MD = %d ||\n || ME    = %d         MG = %d         MF0 = %d ||\n || MF1   = %d         MH = %d         MI0 = %d ||\n || MI1   = %d        MJ0 = %d         MJ1 = %d ||\n || T2    = %d         T1 = %d          T0 = %d || \n || E     = %d         S5 = %d         S4  = %d ||\n || S3    = %d         S2 = %d         S1  = %d ||\n || S0    = %d        OP4 = %d         OP3 = %d ||\n || OP2   = %d        OP1 = %d         OP0 = %d || \n || MAOUT =%d     result = %b  instruction r = %h ||\n || MAROut = %d  memoria =  %h  PA   =  %d Mux_PBOut   =  %h ||\n || END OF:     present state = %d       next state = %d, shifter_out = %h || " , CLK, CLR, cu.state,cu.nextS, RFLd,IRLd,MARLd, MDRLd,RW,MOV, FRLd,MA1,MA0,MB1,MB0,MC2,MC1,MC0,MD,ME,MG,MF0,MF1,MH,MI0,MI1,MJ0, MJ1, T2,T1,T0, E, S5,S4,S3,S2,S1,S0, OP4, OP3, OP2, OP1, OP0, MAOUT, alu.result, IROut, MAROut, ram.mem[4],PA, Mux_PBOut,cu.state,cu.nextS, shifter_out);
 endmodule
