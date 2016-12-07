@@ -98,7 +98,10 @@ always @(ME,L1, L0)
 	begin 
 		case(ME) 
 		1'd0:
+			begin
 			outE = L0;
+			$display(" HEREEEEE Out e = %d", outE);
+			end
 		1'd1:
 			outE = L1;
 		endcase

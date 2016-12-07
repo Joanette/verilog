@@ -18,7 +18,7 @@ output reg [31:0] Qs;
 always@(posedge CLK)
 	begin
 		if(MARLd) begin
-		  Qs <= Ds;
+		  Qs = Ds;
 		end
 	end
 
@@ -32,7 +32,7 @@ output reg [31:0] Qs;
 always@(posedge CLK) 
 	begin
 	  if(MDRLd)
-			Qs<=Ds;
+			Qs = Ds;
 	end
 endmodule
 
@@ -44,6 +44,6 @@ output reg [3:0] Qs;
 always@(posedge CLK)
 	begin 
 		if(FDRLd)
-			Qs <= Ds;
+			Qs = Ds;
 	end
 endmodule
