@@ -496,9 +496,9 @@ always@(posedge CLK, state)
 	task decodeIR();
 	$display("HERE IN decodeIR");
 	 case(ir[27:25])
-		 DATAPSHIFTER: 
+		 DATAPIMMEDIATE: 
 			nextS = 6'd5;
-		 DATAPIMMEDIATE:
+		 DATAPSHIFTER:
 			nextS = 6'd7;
 		 BRANCH:
 			begin 
