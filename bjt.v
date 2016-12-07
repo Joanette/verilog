@@ -13,7 +13,7 @@ parameter LANDSREG= 3'b011;
  wire RFLd,IRLd,MARLd, MDRLd,RW,MOV, FRLd,MA1,MA0,MB1,MB0,MC2,MC1,MC0,MD,ME,MG,MF0,MF1,MH,MI0,MI1,MJ0, MJ1, T2,T1,T0, E, S5,S4,S3,S2,S1,S0, OP4, OP3, OP2, OP1, OP0; 
  wire [1:0]typeData;
  wire [3:0]px; 
- reg  [31:0]ir;	
+// reg  [31:0]ir;	
 //*******RAM parameters***********:
 wire[31:0] DaOut;
 wire MOC;
@@ -22,15 +22,16 @@ reg [7:0]data;
 integer fd, code, i;
 reg [7:0] j; //iteration index
 /******** Register File ******/
-//wire [3:0] muxc_out;
-//wire[3:0] muxa_out;
+//reg [31:0] input_data;
+reg [3:0] d_select;
+reg reset=1;
+integer first_time_flag;
 wire [3:0] muxb_out;
 wire w0 [0:15];
 wire [31:0] rf_out [0:15];
 wire [31:0] PA;
 wire [31:0] PB;
 integer index;
-integer first_time_flag;
 /****** ALU Parameters *******/
 wire [31:0] result;
 wire FlagC;
@@ -72,22 +73,15 @@ wire cout;
 /***Cond***/
 reg cond; 
 //instanitate a Control Unit: 
-controlUnit cu(CLK, CLR,cond, MOC, ir, RFLd, IRLd, MARLd, MDRLd, RW, MOV, typeData,px, FRLd, MA1, MA0, MB1, MB0, MC2, MC1, MC0, MD, ME,MF1, MF0, MG,MH, MI1,MI0,MJ1,MJ0, E, T2, T1,T0,S5,S4,S3,S2,S1,S0, OP4, OP3, OP2, OP1, OP0);
+controlUnit cu(CLK, CLR,cond, MOC, IROut, RFLd, IRLd, MARLd, MDRLd, RW, MOV, typeData,px, FRLd, MA1, MA0, MB1, MB0, MC2, MC1, MC0, MD, ME,MF1, MF0, MG,MH, MI1,MI0,MJ1,MJ0, E, T2, T1,T0,S5,S4,S3,S2,S1,S0, OP4, OP3, OP2, OP1, OP0);
 // instanitate a ALU 
 ALU alu(result, FlagZ, FlagN, FlagC, FlagV, PA, Mux_PBOut, Mux_DOut, carry);
 //instanitate a ram: 
 ram256x8 ram(Mux_GOut, DaOut, RW, MAROut, MOV, MOC,typeData);
 //instantiate an MAR 
-MAR  mar (MARLd, CLK, result, MAROut);
+MAR  mar(MARLd, CLK, result, MAROut);
 //instanitate MDR
 MDR mdr (MDRLd, CLK, Mux_EOut , MDROut);
-// instantiate Registers
-generate
-	genvar k; 
-	for (k = 0; k < 16; i = k + 1) begin
-		register r (rf_out[k], 32'b00000000000000000000000000000000, CLK, w0[k]);
-	end 
-endgenerate
 //instanitate MUX A 
 MUXA muxa(MAOUT, IROut,px, {MA1, MA0});
 Mux_16_1 mux1 (PA, MAOUT, rf_out);
@@ -115,6 +109,13 @@ shifter_extender se(shifter_out, Mux_FOut, {S5, S4, S3, S2, S1, S0}, Mux_IOut, E
 MUXI muxi (Mux_IOut, {T2, T1, T0}, {1'b0 ,IROut[6], IROut[5]}, {MI1, MI0});
 //instanitate ir 
 IR instructionRegister(IRLd,CLK,DaOut,IROut);
+// instantiate Registers
+generate
+	genvar k; 
+	for (k = 0; k < 16; i = k + 1) begin
+		register r (rf_out[k], result, CLK, w0[k],reset);
+	end
+endgenerate
 
 initial begin
     fd = $fopen("IR.dat", "r");
@@ -126,19 +127,24 @@ initial begin
             i = i+1;
         end        
         $fclose(fd);
+		//input_data = 32'd0;
+		d_select = 'b0000;
+		first_time_flag = 1'b1;
 		CLR = 1;
 		cond = 1;
-		CLK = 1;
-		repeat (10) begin
+		#5 CLK = 0;
+		reset = 1;
+		repeat (24) 
+		begin	
 			#5 CLK = ~CLK;
-		end			
+			if(first_time_flag) 
+			begin
+			  reset = 0;
+			  first_time_flag = 0;
+			end	
+		end
 end
-// initial begin
-//          CLK = 1;
-// 		repeat (10) begin
-// 			#5 CLK = ~CLK;
-// 		end	
-// end
+
 initial 
-$monitor("CLK= %d, present state = %d,RFLd = %d,IRLd= %d,MARLd= %d, MDRLd = %d ,RW = %d ,MOV= %d, FRLd= %d,MA1= %d ,MA0= %d,MB1= %d,MB0= %d,MC2= %d,MC1= %d,MC0= %d,MD= %d,ME= %d,MG= %d,MF0= %d,MF1= %d,MH= %d,MI0= %d,MI1= %d,MJ0= %d, MJ1= %d, T2= %d,T1= %d,T0= %d, E= %d, S5= %d,S4= %d,S3= %d,S2= %d,S1= %d,S0= %d, OP4= %d, OP3= %d, OP2= %d, OP1= %d, OP0= %d, MAOUT = %d, rf_out = %d, result= %d, instruction r = %d " ,CLK, cu.state, RFLd,IRLd,MARLd, MDRLd,RW,MOV, FRLd,MA1,MA0,MB1,MB0,MC2,MC1,MC0,MD,ME,MG,MF0,MF1,MH,MI0,MI1,MJ0, MJ1, T2,T1,T0, E, S5,S4,S3,S2,S1,S0, OP4, OP3, OP2, OP1, OP0, , MAOUT, rf_out[5], alu.result, IROut); 
+$monitor("/////CLK= %d, present state = %d ///// \n RFLd = %d,IRLd = %d,MARLd = %d, MDRLd = %d\n RW = %d ,MOV= %d, FRLd= %d,MA1= %d \n MA0 = %d,MB1 = %d,MB0 = %d,MC2= %d,MC1= %d,MC0= %d \n MD = %d,ME = %d,MG = %d,MF0 = %d,MF1 = %d \n MH = %d,MI0 = %d, = %d\n MJ0 = %d, MJ1 = %d, T2 = %d,T1 = %d,T0 = %d, \n E = %d, S5 = %d,S4 = %d,S3 = %d,S2 = %d,S1 = %d,S0 = %d \n OP4 = %d, OP3 = %d, OP2 = %d, OP1= %d, OP0 = %d \n ******* MAOUT = %d, result = %d, instruction r = %b\n MAROut = %d, memoria = %h, PA = %d********" ,CLK, cu.state, RFLd,IRLd,MARLd, MDRLd,RW,MOV, FRLd,MA1,MA0,MB1,MB0,MC2,MC1,MC0,MD,ME,MG,MF0,MF1,MH,MI0,MI1,MJ0, MJ1, T2,T1,T0, E, S5,S4,S3,S2,S1,S0, OP4, OP3, OP2, OP1, OP0, MAOUT, alu.result, IROut, MAROut, ram.mem[4],PA);
 endmodule
