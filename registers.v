@@ -36,14 +36,17 @@ always@(posedge CLK)
 	end
 endmodule
 
-module FDR (FDRLd, CLK, Ds, Qs); 
+module FDR (FDRLd, CLK, CLR, Ds, Qs); 
 input FDRLd; 
 input CLK;
+input CLR;
 input  [3:0] Ds; 
 output reg [3:0] Qs; 
 always@(posedge CLK)
 	begin 
 		if(FDRLd)
 			Qs = Ds;
+		if(CLR)
+			Qs = 0;
 	end
 endmodule

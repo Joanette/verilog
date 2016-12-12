@@ -4,6 +4,7 @@ controlUnit.v
 register_file.v 
 Updated_ALU.v 
 registers.v
+conditionTester.v
 MUXES.v
 shifter.v 
-conditionTester.v 
+conditionTester.v

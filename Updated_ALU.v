@@ -3,6 +3,13 @@
 
 module ALU(output reg [31:0] result, output reg FlagZ, FlagN, FlagC, FlagV, input [31:0] A, B, input [4:0] opcode, input carry);
 
+reg signed [31:0] sA;
+reg signed [31:0] sB;
+
+assign sA = A;
+
+assign sB = B;
+
 always @(A, B, carry, opcode)
 	 begin
 		case (opcode)
@@ -105,6 +112,7 @@ always @(A, B, carry, opcode)
 			5'b10011:	//B
 				begin
 					result = B;
+					$display("B result: ", result);
 				end
 			5'b10100:	//A - B + 4
 				begin

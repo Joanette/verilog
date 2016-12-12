@@ -9,8 +9,7 @@ always @ (MA,  ir, px)
 			2'd0: 
 				out = ir[19:16];
 			2'd1:  begin
-				out = ir[15:12] + px[3:0];
-				$display("Mux A Value = %h", out);		  
+				out = ir[15:12] + px[3:0];		  
 			end
 			2'd2:
 				out = 4'd15;
@@ -26,23 +25,16 @@ input [31:0] L1; //shifter_out
 input [31:0] L2; 
 	always @(MB, L0, L1, L2)
 		begin 
-		$display("MB value = %h ", MB);
 			case(MB)
 			2'd0: begin
-				outPB = L0;
-				$display("Arrived at L0");
-				$display("out = %d", outPB);	 			  
+				outPB = L0;	 			  
 			end
 			2'd1:
 			begin 
 				outPB = L1;
-				$display("Arrived at L1");
-				$display("out = %d", outPB);	
 			end
 			2'd2: begin
-				outPB = L2;
-				$display("Arrived at L2"); 
-				$display("out = %d", outPB);	
+				outPB = L2;	
 			end
 			2'd3: begin
 				outPB = 32'd5;
@@ -60,15 +52,15 @@ input [31:0] ir;
 		begin 
 		case(MC)
 		 3'd0: 
-			outC = px[3:0]+ir[15:12];
+			outC = px[3:0]+ir[15:12]; // Rd
 		 3'd1: 
-			outC = ir[19:12];
+			outC = ir[19:12]; // Rn
 		 3'd2:
-			outC = 4'b1110; 
+			outC = 4'b1110; //R14
 		 3'd3:
-			outC = 4'b1111; 
+			outC = 4'b1111; // R15
 		 3'd4: 
-			outC = 4'b0111;
+			outC = 4'b0111; //R7
 		 endcase
 		end
 endmodule
@@ -100,7 +92,6 @@ always @(ME,L1, L0)
 		1'd0:
 			begin
 			outE = L0;
-			$display(" HEREEEEE Out e = %d", outE);
 			end
 		1'd1:
 			outE = L1;

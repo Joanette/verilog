@@ -20,10 +20,11 @@ module shifter_extender(output reg [31:0] shifter_out, input [31:0] shifter_in, 
 					shifter_out = tmp[31:0];
 					$display("Entered 2 time rotate right");
 				end
+				5: shifter_out = shifter_in << 2;
 			endcase
 		end
 		else if (E == 1) begin
-			$display("shifter_in value = %h", shifter_in);
+			$display("T value = %h", t);
 			case(t)
 				0: begin
 					if (shifter_in[7] == 1) begin
@@ -42,7 +43,16 @@ module shifter_extender(output reg [31:0] shifter_out, input [31:0] shifter_in, 
 						shifter_out = {16'b0000000000000000, shifter_in[15:0]};
 					end
 				end
-				3: shifter_out = {16'b0000000000000000, shifter_in[15:0]};
+				3: shifter_out = {16'b0000000000000000, shifter_in[15:0]}; 
+				4: begin
+					if (shifter_in[23] == 1) begin
+						shifter_out = {8'b11111111, shifter_in[23:0]}; // For B&L
+					end
+					else begin
+						shifter_out = {8'b00000000, shifter_in[23:0]}; // For B&L
+					end					
+				end
+				5: shifter_out = {20'b00000000000000000000, shifter_in[11:0]};
 			endcase
 		end
 	end

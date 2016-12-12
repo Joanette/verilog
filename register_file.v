@@ -8,6 +8,7 @@ module binary_decoder (output reg Y [0:15], input [3:0] D, input ld);
 		end
 		if(ld) begin
 			Y[D] = 1;
+			$display("Register %d selected", D);
 		end
 	end
 endmodule
@@ -19,12 +20,9 @@ module register (output reg [31:0] Q, input [31:0] D, input clk, input ld, input
 		end
 		else if(ld && clk) begin
 			Q = D;
-			$display("Data inputted to register= %d",D);
-			$display("Data stored to register= %d",Q);
+			$display("Data inputted to register= %h",D);
+			$display("Data stored to register= %h",Q);
 		end
-		else if(clk) begin
-			Q = Q;
-		end	
 endmodule
 
 module Mux_16_1 (output reg [31:0] Y, input [3:0] S, input [31:0] data[0:15]);
