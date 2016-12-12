@@ -185,27 +185,9 @@ always@(posedge CLK, state)
 			MJ0  <= 1; 
 			S2 	 <= 1; 
 			OP2  <= 1; 
-			nextS = 6'd11;
-			//$display("current_state: %d, nextS: %d \n", state, nextS);
-		end
-		else if (state == 6'd11)
-		begin
-		RFLd <= 0;IRLd<= 0;MARLd<= 0;CLR   <= 0;MDRLd<= 0;E = 0;RW<= 0;MOV <=0;typeData <=0;px<= 4'b0000;FRLd<=0;MA1<=0;MA0<= 0;MB1<= 0;MB0<=0;MC2<= 0;MC1<= 0;MC0<= 0;MD <= 0;ME<= 0;MF1<=0;MF0<= 0;MG <= 0;MH<=0;MI1<=0;MI0<= 0;MJ1 <=0;MJ0<= 0;T0 <= 0;T1 <= 0;T2 <=0;S5 <= 0;S4 <=0;S3<= 0;S2<= 0;S1<= 0;S0<= 0;OP4<= 0;OP3 <= 0;OP2 <= 0;OP1 <= 0;OP0 <= 0;
-			RFLd <= 1;
-			MA1	 <= 1;
-			MC1	 <= 1; 
-			MC0	 <= 1;
-			MB0	 <= 1;
-			MD   <= 1;
-			MI1	 <= 1;
-			T2	 <= 1;
-			T0	 <= 1;
-			MJ0  <= 1; 
-			S2 	 <= 1; 
-			OP2  <= 1; 
 			nextS = 6'd1;
 			//$display("current_state: %d, nextS: %d \n", state, nextS);
-		end		
+		end
 		else if(state == 6'd10)
 		begin
 		RFLd <= 0;IRLd<= 0;MARLd<= 0;CLR   <= 0;MDRLd<= 0;E = 0;RW<= 0;MOV <=0;typeData <=0;px<= 4'b0000;FRLd<=0;MA1<=0;MA0<= 0;MB1<= 0;MB0<=0;MC2<= 0;MC1<= 0;MC0<= 0;MD <= 0;ME<= 0;MF1<=0;MF0<= 0;MG <= 0;MH<=0;MI1<=0;MI0<= 0;MJ1 <=0;MJ0<= 0;T0 <= 0;T1 <= 0;T2 <=0;S5 <= 0;S4 <=0;S3<= 0;S2<= 0;S1<= 0;S0<= 0;OP4<= 0;OP3 <= 0;OP2 <= 0;OP1 <= 0;OP0 <= 0;
