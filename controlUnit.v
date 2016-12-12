@@ -348,6 +348,7 @@ always@(posedge CLK, state)
 		RFLd <= 0;IRLd<= 0;MARLd<= 0;CLR   <= 0;MDRLd<= 0;E = 0;RW<= 0;MOV <=0;typeData <=0;px<= 4'b0000;FRLd<=0;MA1<=0;MA0<= 0;MB1<= 0;MB0<=0;MC2<= 0;MC1<= 0;MC0<= 0;MD <= 0;ME<= 0;MF1<=0;MF0<= 0;MG <= 0;MH<=0;MI1<=0;MI0<= 0;MJ1 <=0;MJ0<= 0;T0 <= 0;T1 <= 0;T2 <=0;S5 <= 0;S4 <=0;S3<= 0;S2<= 0;S1<= 0;S0<= 0;OP4<= 0;OP3 <= 0;OP2 <= 0;OP1 <= 0;OP0 <= 0;
 			MDRLd    <= 1;
 			MB1	 	 <= 1;
+			MA0		 <= 1;
 			MB0	 	 <= 1;
 			MD 	     <= 1;
 			ME		 <= 1;
@@ -366,13 +367,7 @@ always@(posedge CLK, state)
 			typeData <= 2'b10;
 			MI1 	 <= 1;
 			
-			nextS    = 6'd45;
-		end	
-		else if (state == 6'd43) 
-		begin
-		RFLd <= 0;IRLd<= 0;MARLd<= 0;CLR   <= 0;MDRLd<= 0;E = 0;RW<= 0;MOV <=0;typeData <=0;px<= 4'b0000;FRLd<=0;MA1<=0;MA0<= 0;MB1<= 0;MB0<=0;MC2<= 0;MC1<= 0;MC0<= 0;MD <= 0;ME<= 0;MF1<=0;MF0<= 0;MG <= 0;MH<=0;MI1<=0;MI0<= 0;MJ1 <=0;MJ0<= 0;T0 <= 0;T1 <= 0;T2 <=0;S5 <= 0;S4 <=0;S3<= 0;S2<= 0;S1<= 0;S0<= 0;OP4<= 0;OP3 <= 0;OP2 <= 0;OP1 <= 0;OP0 <= 0;
-			MOV  <= 1;
-			
+			// nextS    = 6'd45;
 		    if(ir[24] == 1 && ir[21]==0)
 				nextS = 6'd1;
 			else if(ir[24] == 0 || (ir[24] == 1 && ir[21]==1))
@@ -391,7 +386,13 @@ always@(posedge CLK, state)
 						else if(ir[23] == 0)
 							nextS = 6'd49;
 					end
-				end
+				end			
+		end	
+		else if (state == 6'd43) 
+		begin
+		RFLd <= 0;IRLd<= 0;MARLd<= 0;CLR   <= 0;MDRLd<= 0;E = 0;RW<= 0;MOV <=0;typeData <=0;px<= 4'b0000;FRLd<=0;MA1<=0;MA0<= 0;MB1<= 0;MB0<=0;MC2<= 0;MC1<= 0;MC0<= 0;MD <= 0;ME<= 0;MF1<=0;MF0<= 0;MG <= 0;MH<=0;MI1<=0;MI0<= 0;MJ1 <=0;MJ0<= 0;T0 <= 0;T1 <= 0;T2 <=0;S5 <= 0;S4 <=0;S3<= 0;S2<= 0;S1<= 0;S0<= 0;OP4<= 0;OP3 <= 0;OP2 <= 0;OP1 <= 0;OP0 <= 0;
+			// MOV  <= 1;
+			
 		end	
 		else if (state == 6'd44) 
 		begin
@@ -409,11 +410,29 @@ always@(posedge CLK, state)
 			MOV		<= 1; 
 			MG		<= 1; 
 			MI1 	<= 1;
-			E		<= 1;
-			T1 		<= 1; 
-			T0		<= 1;
-			
-			nextS   = 6'd43;
+			MF1		<= 1;
+			T2 		<= 1; 
+			T1 		<= 1; 			
+			// nextS   = 6'd43;
+		    if(ir[24] == 1 && ir[21]==0)
+				nextS = 6'd1;
+			else if(ir[24] == 0 || (ir[24] == 1 && ir[21]==1))
+				begin 
+					if(ir[27:25] ==LANDSIMMEDIATE)
+					begin
+						if(ir[23] == 1)
+							nextS = 6'd38;
+						else if(ir[23] == 0)
+							nextS = 6'd48;
+					end
+					if(ir[27:25] ==LANDSREG)
+					begin
+						if(ir[23] == 1)
+							nextS = 6'd39;
+						else if(ir[23] == 0)
+							nextS = 6'd49;
+					end
+				end			
 		end	
 		else if (state == 6'd46) 
 		begin
@@ -518,9 +537,9 @@ always@(posedge CLK, state)
 			nextS = 6'd7;
 		 BRANCH:
 			begin 
-				if(ir[20] ==0)
+				if(ir[24] ==0)
 				 nextS = 6'd8;
-				else if(ir[20] == 1)
+				else if(ir[24] == 1)
 				 nextS = 6'd10; 
 			end
 		 LANDSIMMEDIATE: 

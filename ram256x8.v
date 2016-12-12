@@ -36,9 +36,10 @@ always @(rw, mov)
 				begin
 					case(typeData)
 					2'b00:
-					if(mov == 1 )
+					if(mov == 1)
 					begin
 					 	mem[address] = DataIn;
+						$display("Data written in address %d to memory is: %h", address, mem[address]);
 					end
 					2'b01: 
 						begin

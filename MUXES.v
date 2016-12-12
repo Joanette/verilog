@@ -11,8 +11,10 @@ always @ (MA,  ir, px)
 			2'd1:  begin
 				out = ir[15:12] + px[3:0];		  
 			end
-			2'd2:
-				out = 4'd15;
+			2'd2: begin
+				out = 4'b1111;
+				$display("Entered r15 case");
+			end
 			endcase
 	  end
 endmodule

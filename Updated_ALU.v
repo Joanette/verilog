@@ -6,12 +6,10 @@ module ALU(output reg [31:0] result, output reg FlagZ, FlagN, FlagC, FlagV, inpu
 reg signed [31:0] sA;
 reg signed [31:0] sB;
 
-assign sA = A;
-
-assign sB = B;
-
 always @(A, B, carry, opcode)
 	 begin
+	 	sA = A;
+		sB = B;
 		case (opcode)
 			5'b00000:	//AND Logical 
 				begin

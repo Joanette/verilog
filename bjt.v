@@ -9,7 +9,7 @@ parameter BRANCH = 3'b101;
 parameter LANDSIMMEDIATE= 3'b010; 
 parameter LANDSREG= 3'b011;
 //Wires:
- wire RFLd,IRLd,MARLd, MDRLd,RW,MOV, FRLd,MA1,MA0,MB1,MB0,MC2,MC1,MC0,MD,ME,MG,MF0,MF1,MH,MI0,MI1,MJ0, MJ1, T2,T1,T0, E, S5,S4,S3,S2,S1,S0, OP4, OP3, OP2, OP1, OP0; 
+ wire RFLd,IRLd,MARLd, MDRLd,RW,MOV, FRLd,MA1,MA0,MB1,MB0,MC2,MC1,MC0,MD,ME,MG,MF0,MF1,MH,MI0,MI1,MJ0, MJ1, T2,T1,T0, E, S5,S4,S3,S2,S1,S0, OP4, OP3, OP2, OP1, OP0;
  wire [1:0]typeData;
  wire [3:0]px;
  wire CLR;
@@ -27,10 +27,11 @@ reg [3:0] d_select;
 reg reset=1;
 integer first_time_flag;
 wire [3:0] muxb_out;
-wire w0 [0:15];
+wire ld0,ld1,ld2,ld3,ld4,ld5,ld6,ld7,ld8,ld9,ld10,ld11,ld12,ld13,ld14, ld15;
 wire [31:0] rf_out [0:15];
 wire [31:0] PA;
 wire [31:0] PB;
+
 integer index;
 /****** ALU Parameters *******/
 wire [31:0] result;
@@ -86,21 +87,21 @@ MAR  mar(MARLd, CLK, result, MAROut);
 MDR mdr (MDRLd, CLK, Mux_EOut , MDROut);
 //instanitate MUX A 
 MUXA muxa(MAOUT, IROut,px, {MA1, MA0});
-Mux_16_1 mux1 (PA, MAOUT, rf_out);
+Mux_16_1 mux1 (PA, MAOUT,rf_out[0],rf_out[1],rf_out[2],rf_out[3],rf_out[4],rf_out[5],rf_out[6],rf_out[7],rf_out[8],rf_out[9],rf_out[10],rf_out[11],rf_out[12],rf_out[13],rf_out[14],rf_out[15]);
 //instanitate MUX C 
 MUXC muxc (Mux_COut, IROut, px, {MC2, MC1, MC0});
-binary_decoder d (w0, Mux_COut, RFLd);
-//instanitate Mux D 
+binary_decoder d (ld0,ld1,ld2,ld3,ld4,ld5,ld6,ld7,ld8,ld9,ld10,ld11,ld12,ld13,ld14, ld15, Mux_COut, RFLd);
+//instanitate Mux D
 MUXD muxd(Mux_DOut, {OP4, OP3, OP2, OP1, OP0}, IROut, MD);
 //instanitate MUX E 
 MUXE muxe(Mux_EOut,result,DaOut,ME); 
 //instanitate MUX F 
 MUXF muxf (Mux_FOut,IROut,MDROut,DaOut, PB, {MF1,MF0});
 //instanitate MUX G 
-MUXG muxg(Mux_GOut,MDROut, Mux_HOut , MG);
+MUXG muxg(Mux_GOut,MDROut, shifter_out, MG);
 //instanitate MUX j 
 MUXJ muxj(Mux_JOut, IROut, {MJ1,MJ0} );
-Mux_16_1 mux2 (PB, Mux_JOut, rf_out);
+Mux_16_1 mux2 (PB, Mux_JOut,rf_out[0],rf_out[1],rf_out[2],rf_out[3],rf_out[4],rf_out[5],rf_out[6],rf_out[7],rf_out[8],rf_out[9],rf_out[10],rf_out[11],rf_out[12],rf_out[13],rf_out[14],rf_out[15]);
 //instanitate shifter 
 shifter_extender se(shifter_out, Mux_FOut, {S5, S4, S3, S2, S1, S0}, Mux_IOut, E);
 //instanitate MUX B 
@@ -115,13 +116,29 @@ FDR FlagRegister(FRLd, CLK, CLR,{FlagN,FlagZ,FlagC,FlagV},FDROut);
 cond_tester condTest(CondOut,IROut[31:28], FDROut);
 
 // instantiate Registers
-generate
-	genvar k; 
-	for (k = 0; k < 16; i = k + 1) begin
-		register r (rf_out[k], result, CLK, w0[k],CLR);
-	end
-endgenerate
+// generate
+// 	genvar k; 
+// 	for (k = 0; k < 16; i = k + 1) begin
+// 		register r (rf_out[k], result, CLK, ld[k],CLR);
+// 	end
+// endgenerate
 
+register r0 (rf_out[0], result, CLK, ld0,CLR);
+register r1 (rf_out[1], result, CLK, ld1,CLR);
+register r2 (rf_out[2], result, CLK, ld2,CLR);
+register r3 (rf_out[3], result, CLK, ld3,CLR);
+register r4 (rf_out[4], result, CLK, ld4,CLR);
+register r5 (rf_out[5], result, CLK, ld5,CLR);
+register r6 (rf_out[6], result, CLK, ld6,CLR);
+register r7 (rf_out[7], result, CLK, ld7,CLR);
+register r8 (rf_out[8], result, CLK, ld8,CLR);
+register r9 (rf_out[9], result, CLK, ld9,CLR);
+register r10 (rf_out[10], result, CLK, ld10,CLR);
+register r11 (rf_out[11], result, CLK, ld11,CLR);
+register r12 (rf_out[12], result, CLK, ld12,CLR);
+register r13 (rf_out[13], result, CLK, ld13,CLR);
+register r14 (rf_out[14], result, CLK, ld14,CLR);
+register r15 (rf_out[15], result, CLK, ld15,CLR);
 initial begin
     fd = $fopen("IR.dat", "r");
     i = 0;
@@ -133,19 +150,20 @@ initial begin
         end
         $fclose(fd);
 		first_time_flag = 1'b1;
-		// cond = 1;
 		#5 CLK = 0;
 		repeat (120) 
 		begin	
-			#5 CLK = ~CLK;
-			// if(first_time_flag) 
-			// begin
-			//   reset = 0;
-			//   first_time_flag = 0;
-			// end	
+			#5 CLK = ~CLK;	
 		end
 end
 
 initial 
-$monitor(" || CLK   = %d    CLR   = %d   present state = %d       next state = %d || \n || RFLd  = %d       IRLd = %d       MARLd = %d ||\n || MDRLd = %d         RW = %d         MOV = %d ||\n || FRLd  = %d        MA1 = %d         MA0 = %d ||\n || MB1   = %d        MB0 = %d         MC2 = %d || \n || MC1   = %d        MC0 = %d          MD = %d ||\n || ME    = %d         MG = %d         MF0 = %d ||\n || MF1   = %d         MH = %d         MI0 = %d ||\n || MI1   = %d        MJ0 = %d         MJ1 = %d ||\n || T2    = %d         T1 = %d          T0 = %d || \n || E     = %d         S5 = %d         S4  = %d ||\n || S3    = %d         S2 = %d         S1  = %d ||\n || S0    = %d        OP4 = %d         OP3 = %d ||\n || OP2   = %d        OP1 = %d         OP0 = %d || \n || MAOUT =%d     result = %h  instruction r = %h ||\n || MAROut = %d  PA =  %h PBOut =  %h Mux_COut = %h ||\n || END OF:     present state = %d  next state = %d, Mux_EOut = %h || \n shifter_in = %h, shifter_out = %h, MDROut = %h || DaOut = %h, Mux_JOut = %h" , CLK, CLR, cu.state,cu.nextS, RFLd,IRLd,MARLd, MDRLd,RW,MOV, FRLd,MA1,MA0,MB1,MB0,MC2,MC1,MC0,MD,ME,MG,MF0,MF1,MH,MI0,MI1,MJ0, MJ1, T2,T1,T0, E, S5,S4,S3,S2,S1,S0, OP4, OP3, OP2, OP1, OP0, MAOUT, alu.result, IROut, MAROut,PA, PB,Mux_COut,cu.state,cu.nextS, Mux_EOut, Mux_FOut, shifter_out, MDROut, DaOut, Mux_JOut);
+$monitor(" || CLK   = %d    CLR   = %d   present state = %d       next state = %d || \n || RFLd  = %d       IRLd = %d       MARLd = %d ||\n || MDRLd = %d         RW = %d         MOV = %d ||\n || FRLd  = %d        MA1 = %d         MA0 = %d ||\n || MB1   = %d        MB0 = %d         MC2 = %d || \n || MC1   = %d        MC0 = %d          MD = %d ||\n || ME    = %d         MG = %d         MF0 = %d ||\n || MF1   = %d         MH = %d         MI0 = %d ||\n || MI1   = %d        MJ0 = %d         MJ1 = %d ||\n || T2    = %d         T1 = %d          T0 = %d || \n || E     = %d         S5 = %d         S4  = %d ||\n || S3    = %d         S2 = %d         S1  = %d ||\n || S0    = %d        OP4 = %d         OP3 = %d ||\n || OP2   = %d        OP1 = %d         OP0 = %d || \n || MAOUT =%d     result = %h  instruction r = %h ||\n || MAROut = %d  PA =  %h PBOut =  %h Mux_COut = %h ||\n || END OF:     present state = %d  next state = %d, Mux_EOut = %h || \n shifter_in = %h, shifter_out = %h, MDROut = %h || Mux_GOut = %h   DaOut = %h   Mux_JOut = %h, rf0_out = %h   rf1_out = %h   rf2_out = %h   \nrf3_out = %h   rf4_out = %h rf5_out = %h   \nrf6_out = %h   rf7_out = %h   rf8_out = %h   \nrf9_out = %h   rf10_out = %h   rf11_out = %h, \nrf12_out = %h   rf13_out = %h   rf14_out = %h   \nrf15_out = %h" , CLK, CLR, cu.state,cu.nextS, RFLd,IRLd,MARLd, MDRLd,RW,MOV, FRLd,MA1,MA0,MB1,MB0,MC2,MC1,MC0,MD,ME,MG,MF0,MF1,MH,MI0,MI1,MJ0, MJ1, T2,T1,T0, E, S5,S4,S3,S2,S1,S0, OP4, OP3, OP2, OP1, OP0, MAOUT, alu.result, IROut, MAROut,PA, PB,Mux_COut,cu.state,cu.nextS, Mux_EOut, Mux_FOut, shifter_out, MDROut, Mux_GOut, DaOut, Mux_JOut,rf_out[0], rf_out[1], rf_out[2], rf_out[3], rf_out[4], rf_out[5], rf_out[6], rf_out[7], rf_out[8], rf_out[9], rf_out[10], rf_out[11], rf_out[12], rf_out[13], rf_out[14], rf_out[15]);
+
+// initial begin
+// 	for (i = 0; i < 45; i++) begin
+// 		$display("Memory in word %d is %h\n", i, ram.mem[i]);
+// 	end
+// end
+
 endmodule

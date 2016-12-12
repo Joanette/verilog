@@ -21,6 +21,7 @@ module shifter_extender(output reg [31:0] shifter_out, input [31:0] shifter_in, 
 					$display("Entered 2 time rotate right");
 				end
 				5: shifter_out = shifter_in << 2;
+				6: shifter_out = shifter_in << 24;
 			endcase
 		end
 		else if (E == 1) begin
