@@ -39,7 +39,7 @@ always @(rw, mov)
 					if(mov == 1)
 					begin
 					 	mem[address] = DataIn;
-						$display("Data written in address %d to memory is: %h", address, mem[address]);
+						$display("Data written in address %d to memory is: %h, Data in = %h", address, mem[address], DataIn);
 					end
 					2'b01: 
 						begin
