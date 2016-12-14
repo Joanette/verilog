@@ -18,14 +18,14 @@ module shifter_extender(output reg [31:0] shifter_out, input [31:0] shifter_in, 
 					newShiftValue = shift_value * 2 ;
 					tmp = {shifter_in, shifter_in} >> newShiftValue;
 					shifter_out = tmp[31:0];
-					$display("Entered 2 time rotate right");
+					//$display("Entered 2 time rotate right");
 				end
 				5: shifter_out = shifter_in << 2;
 				6: shifter_out = shifter_in << 24;
 			endcase
 		end
 		else if (E == 1) begin
-			$display("T value = %h", t);
+			//$display("T value = %h", t);
 			case(t)
 				0: begin
 					if (shifter_in[7] == 1) begin

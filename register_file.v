@@ -39,7 +39,7 @@ endmodule
 
 module Mux_16_1 (output reg [31:0] Y, input [3:0] S, input [31:0] r0_out,r1_out,r2_out,r3_out,r4_out,r5_out,r6_out,r7_out,r8_out,r9_out,r10_out,r11_out,r12_out,r13_out,r14_out,r15_out);
 	always @ (S, r0_out,r1_out,r2_out,r3_out,r4_out,r5_out,r6_out,r7_out,r8_out,r9_out,r10_out,r11_out,r12_out,r13_out,r14_out,r15_out) begin
-		$display("Register input value: %d", S);
+		//$display("Register input value: %d", S);
 		case (S)
 			0: Y = r0_out;
 			1: Y = r1_out;

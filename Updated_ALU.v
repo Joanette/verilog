@@ -110,7 +110,7 @@ always @(A, B, carry, opcode)
 			5'b10011:	//B
 				begin
 					result = B;
-					$display("B result: ", result);
+					//$display("B result: ", result);
 				end
 			5'b10100:	//A - B + 4
 				begin

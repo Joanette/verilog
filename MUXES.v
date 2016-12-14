@@ -13,7 +13,7 @@ always @ (MA,  ir, px)
 			end
 			2'd2: begin
 				out = 4'b1111;
-				$display("Entered r15 case");
+				//$display("Entered r15 case");
 			end
 			endcase
 	  end
