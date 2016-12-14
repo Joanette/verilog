@@ -56,7 +56,7 @@ input [31:0] ir;
 		 3'd0: 
 			outC = px[3:0]+ir[15:12]; // Rd
 		 3'd1: 
-			outC = ir[19:12]; // Rn
+			outC = ir[19:16]; // Rn
 		 3'd2:
 			outC = 4'b1110; //R14
 		 3'd3:

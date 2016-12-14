@@ -140,7 +140,7 @@ register r13 (rf_out[13], result, CLK, ld13,CLR);
 register r14 (rf_out[14], result, CLK, ld14,CLR);
 register r15 (rf_out[15], result, CLK, ld15,CLR);
 initial begin
-    fd = $fopen("IR.dat", "r");
+    fd = $fopen("IR2.dat", "r");
     i = 0;
         while(!($feof(fd))) 
         begin
@@ -151,7 +151,7 @@ initial begin
         $fclose(fd);
 		first_time_flag = 1'b1;
 		#5 CLK = 0;
-		repeat (340) 
+		repeat (640)
 		begin	
 			#5 CLK = ~CLK;	
 		end
@@ -159,8 +159,13 @@ end
 
 
 initial 
+<<<<<<< HEAD
 //$monitor(" || CLK   = %d    CLR   = %d   present state = %d       next state = %d || \n || RFLd  = %d       IRLd = %d       MARLd = %d ||\n || MDRLd = %d         RW = %d         MOV = %d ||\n || FRLd  = %d        MA1 = %d         MA0 = %d ||\n || MB1   = %d        MB0 = %d         MC2 = %d || \n || MC1   = %d        MC0 = %d          MD = %d ||\n || ME    = %d         MG = %d         MF0 = %d ||\n || MF1   = %d         MH = %d         MI0 = %d ||\n || MI1   = %d        MJ0 = %d         MJ1 = %d ||\n || T2    = %d         T1 = %d          T0 = %d || \n || E     = %d         S5 = %d         S4  = %d ||\n || S3    = %d         S2 = %d         S1  = %d ||\n || S0    = %d        OP4 = %d         OP3 = %d ||\n || OP2   = %d        OP1 = %d         OP0 = %d || \n || MAOUT =%d     result = %h  instruction r = %h ||\n || MAROut = %d  PA =  %h PBOut =  %h Mux_COut = %h ||\n || END OF:     present state = %d  next state = %d, Mux_EOut = %h || \n shifter_in = %h, shifter_out = %h, MDROut = %h || Mux_GOut = %h   DaOut = %h   Mux_JOut = %h, rf0_out = %h   rf1_out = %h   rf2_out = %h   \nrf3_out = %h   rf4_out = %h rf5_out = %h   \nrf6_out = %h   rf7_out = %h   rf8_out = %h   \nrf9_out = %h   rf10_out = %h   rf11_out = %h, \nrf12_out = %h   rf13_out = %h   rf14_out = %h   \nrf15_out = %h  CondOut = %h FlagZ = %h\n || mem[0] = %h%h%h%h     mem[4] = %h%h%h%h  mem[8]=%h%h%h%h ||\n || mem[12] = %h%h%h%h    mem[16] = %h%h%h%h    mem[20]= %h%h%h%h ||\n || mem[24] = %h%h%h%h    mem[28] = %h%h%h%h    mem[32]= %h%h%h%h ||\n || mem[36] = %h%h%h%h    mem[40] = %h%h%h%h    mem[44]= %h%h%h%h ||\n" , CLK, CLR, cu.state,cu.nextS, RFLd,IRLd,MARLd, MDRLd,RW,MOV, FRLd,MA1,MA0,MB1,MB0,MC2,MC1,MC0,MD,ME,MG,MF0,MF1,MH,MI0,MI1,MJ0, MJ1, T2,T1,T0, E, S5,S4,S3,S2,S1,S0, OP4, OP3, OP2, OP1, OP0, MAOUT, alu.result, IROut, MAROut,PA, PB,Mux_COut,cu.state,cu.nextS, Mux_EOut, Mux_FOut, shifter_out, MDROut, Mux_GOut, DaOut, Mux_JOut,rf_out[0], rf_out[1], rf_out[2], rf_out[3], rf_out[4], rf_out[5], rf_out[6], rf_out[7], rf_out[8], rf_out[9], rf_out[10], rf_out[11], rf_out[12], rf_out[13], rf_out[14], rf_out[15], CondOut, FlagZ,ram.mem[0], ram.mem[1], ram.mem[2], ram.mem[3], ram.mem[4], ram.mem[5], ram.mem[6], ram.mem[7],ram.mem[8],ram.mem[9],ram.mem[10],ram.mem[11],ram.mem[12],ram.mem[13],ram.mem[14],ram.mem[15],ram.mem[16],ram.mem[17],ram.mem[18],ram.mem[19],ram.mem[20],ram.mem[21],ram.mem[22],ram.mem[23],ram.mem[24],ram.mem[25],ram.mem[26],ram.mem[27],ram.mem[28],ram.mem[29],ram.mem[30],ram.mem[31],ram.mem[32],ram.mem[33],ram.mem[34],ram.mem[35],ram.mem[36],ram.mem[37],ram.mem[38],ram.mem[39],ram.mem[40],ram.mem[41],ram.mem[42],ram.mem[43], ram.mem[44],ram.mem[45],ram.mem[46],ram.mem[47], );
 $monitor("MAROut = %d \n || mem[0] = %b%b%b%b   mem[4] = %b%b%b%b  mem[8]=%b%b%b%b ||\n || mem[12] = %b%b%b%b   mem[16] = %b%b%b%b   mem[20]= %b%b%b%b ||\n || mem[24] = %b%b%b%b   mem[28] = %b%b%b%b    mem[32]= %b%b%b%b||\n || mem[36] = %b%b%b%b   mem[40] = %b%b%b%b    mem[44]= %b%b%b%b ||\n" ,MAROut, ram.mem[0], ram.mem[1], ram.mem[2], ram.mem[3], ram.mem[4], ram.mem[5], ram.mem[6], ram.mem[7],ram.mem[8],ram.mem[9],ram.mem[10],ram.mem[11],ram.mem[12],ram.mem[13],ram.mem[14],ram.mem[15],ram.mem[16],ram.mem[17],ram.mem[18],ram.mem[19],ram.mem[20],ram.mem[21],ram.mem[22],ram.mem[23],ram.mem[24],ram.mem[25],ram.mem[26],ram.mem[27],ram.mem[28],ram.mem[29],ram.mem[30],ram.mem[31],ram.mem[32],ram.mem[33],ram.mem[34],ram.mem[35],ram.mem[36],ram.mem[37],ram.mem[38],ram.mem[39],ram.mem[40],ram.mem[41],ram.mem[42],ram.mem[43], ram.mem[44],ram.mem[45],ram.mem[46],ram.mem[47]);
+=======
+$monitor(" || CLK   = %d    CLR   = %d   present state = %d       next state = %d || \n || RFLd  = %d       IRLd = %d       MARLd = %d ||\n || MDRLd = %d         RW = %d         MOV = %d ||\n || FRLd  = %d        MA1 = %d         MA0 = %d ||\n || MB1   = %d        MB0 = %d         MC2 = %d || \n || MC1   = %d        MC0 = %d          MD = %d ||\n || ME    = %d         MG = %d         MF0 = %d ||\n || MF1   = %d         MH = %d         MI0 = %d ||\n || MI1   = %d        MJ0 = %d         MJ1 = %d ||\n || T2    = %d         T1 = %d          T0 = %d || \n || E     = %d         S5 = %d         S4  = %d ||\n || S3    = %d         S2 = %d         S1  = %d ||\n || S0    = %d        OP4 = %d         OP3 = %d ||\n || OP2   = %d        OP1 = %d         OP0 = %d || \n || MAOUT =%d     result = %h  instruction r = %h ||\n || MAROut = %d  PA =  %h PBOut =  %h Mux_COut = %h ||\n || END OF:     present state = %d  next state = %d, Mux_EOut = %h || \n shifter_in = %h, shifter_out = %h, MDROut = %h || Mux_GOut = %h   DaOut = %h   Mux_JOut = %h, \n rf0_out = %h   rf1_out = %h   rf2_out = %h   \nrf3_out = %h   rf4_out = %h rf5_out = %h   \nrf6_out = %h   rf7_out = %h   rf8_out = %h   \nrf9_out = %h   rf10_out = %h   rf11_out = %h, \nrf12_out = %h   rf13_out = %h   rf14_out = %h   \nrf15_out = %h  CondOut = %h FlagZ = %h mem[152] = %h%h%h%h " , CLK, CLR, cu.state,cu.nextS, RFLd,IRLd,MARLd, MDRLd,RW,MOV, FRLd,MA1,MA0,MB1,MB0,MC2,MC1,MC0,MD,ME,MG,MF0,MF1,MH,MI0,MI1,MJ0, MJ1, T2,T1,T0, E, S5,S4,S3,S2,S1,S0, OP4, OP3, OP2, OP1, OP0, MAOUT, alu.result, IROut, MAROut,PA, PB,Mux_COut,cu.state,cu.nextS, Mux_EOut, Mux_FOut, shifter_out, MDROut, Mux_GOut, DaOut, Mux_JOut,rf_out[0], rf_out[1], rf_out[2], rf_out[3], rf_out[4], rf_out[5], rf_out[6], rf_out[7], rf_out[8], rf_out[9], rf_out[10], rf_out[11], rf_out[12], rf_out[13], rf_out[14], rf_out[15], CondOut, FlagZ, ram.mem[152], ram.mem[153],ram.mem[154],ram.mem[155]);
+
+>>>>>>> ca3644edc548b2f56d5009d85f2be0dad9f5d3b2
 // initial begin
 //     f = $fopen("output.txt","w");
 //     for (i = 0; i<41; i=i+4) begin
