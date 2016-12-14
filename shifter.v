@@ -9,7 +9,7 @@ module shifter_extender(output reg [31:0] shifter_out, input [31:0] shifter_in, 
 			case(t)
 				0: shifter_out = shifter_in << shift_value;
 				1: shifter_out = shifter_in >> shift_value;
-				2: shifter_out = shifter_in >>> shift_value;
+				2: shifter_out = $signed(shifter_in) >>> shift_value;
 				3: begin
 					tmp = {shifter_in, shifter_in} >> shift_value;
 					shifter_out = tmp[31:0];

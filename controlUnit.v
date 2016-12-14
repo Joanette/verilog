@@ -146,6 +146,11 @@ always@(posedge CLK, state)
 			MB0		 <= 1; 
 			MH  	 <= 1;
 			MI0		 <= 1;
+			S4		 <= ir[11];
+			S3		 <= ir[10];
+			S2		 <= ir[9];
+			S1		 <= ir[8];
+			S0		 <= ir[7];
 			if(ir[20])
 				FRLd <= 1;			
 			nextS    = 1;
@@ -246,7 +251,9 @@ always@(posedge CLK, state)
 			MOV      <= 1;
 			MB1 	 <= 1;
 			MI1 	 <= 1;
-			
+			if (ir[22]==0) begin
+			  typeData <= 2;
+			end
 			if(ir[20]==1 && ir[22]==0)
 			nextS = 6'd36; 
 			else if(ir[20]==1 && ir[22]==1)
@@ -309,8 +316,13 @@ always@(posedge CLK, state)
 			MB0	 	 <= 1;
 			MC0	 	 <= 1;
 			MD 		 <= 1;
+			E		 <= 1;
 			MI1 	 <= 1;
 			OP2		 <= 1;
+			MF1		 <= 1;
+			MF0		 <= 1;
+			T2		 <= 1;
+			T0		 <= 1;
 			
 			nextS    = 6'd1;
 		end	
@@ -318,10 +330,11 @@ always@(posedge CLK, state)
 		begin
 		RFLd <= 0;IRLd<= 0;MARLd<= 0;CLR   <= 0;MDRLd<= 0;E = 0;RW<= 0;MOV <=0;typeData <=0;px<= 4'b0000;FRLd<=0;MA1<=0;MA0<= 0;MB1<= 0;MB0<=0;MC2<= 0;MC1<= 0;MC0<= 0;MD <= 0;ME<= 0;MF1<=0;MF0<= 0;MG <= 0;MH<=0;MI1<=0;MI0<= 0;MJ1 <=0;MJ0<= 0;T0 <= 0;T1 <= 0;T2 <=0;S5 <= 0;S4 <=0;S3<= 0;S2<= 0;S1<= 0;S0<= 0;OP4<= 0;OP3 <= 0;OP2 <= 0;OP1 <= 0;OP0 <= 0;
 			RFLd     <= 1;
-			MC0	 	 <= 1;
-			MD	 	 <= 1;
-			MI1 	 <= 1;
+			MC0		 <= 1;
+			MD     	 <= 1;
+			MI1		 <= 1;
 			OP2		 <= 1;
+
 			nextS    = 6'd1;
 		end	else if (state == 6'd40) 
 		begin
@@ -438,12 +451,25 @@ always@(posedge CLK, state)
 		else if (state == 6'd46) 
 		begin
 		RFLd <= 0;IRLd<= 0;MARLd<= 0;CLR   <= 0;MDRLd<= 0;E = 0;RW<= 0;MOV <=0;typeData <=0;px<= 4'b0000;FRLd<=0;MA1<=0;MA0<= 0;MB1<= 0;MB0<=0;MC2<= 0;MC1<= 0;MC0<= 0;MD <= 0;ME<= 0;MF1<=0;MF0<= 0;MG <= 0;MH<=0;MI1<=0;MI0<= 0;MJ1 <=0;MJ0<= 0;T0 <= 0;T1 <= 0;T2 <=0;S5 <= 0;S4 <=0;S3<= 0;S2<= 0;S1<= 0;S0<= 0;OP4<= 0;OP3 <= 0;OP2 <= 0;OP1 <= 0;OP0 <= 0;
-			MARLd    <= 1;
-			MB0	 	 <= 1;
-			MD 	     <= 1;
-			MI1		 <= 1;
-			OP1	     <= 1;
+			// MARLd    <= 1;
+			// MB0	 	 <= 1;
+			// MD 	     <= 1;
+			// MI1		 <= 1;
+			// OP1	     <= 1;
 			
+
+			MARLd    <= 1;
+			MB0  	 <= 1;
+			MF0      <= 1;
+			MF1      <= 1;
+			E        <= 1;
+			T0		 <= 1;
+			T1		 <= 0;
+			T2		 <= 1;
+			MD 	     <= 1;
+			MI1 	 <= 1;
+			OP1	     <= 1;
+
 			if(ir[20] == 0)
 				nextS = 6'd41;
 			else if(ir[20]==1 && ir[22] ==0)
@@ -476,16 +502,20 @@ always@(posedge CLK, state)
 			MB0	     <= 1;
 			MC0		 <= 1;
 			MD     	 <= 1;
+			E		 <= 1;
 			MI1		 <= 1;
 			OP1 	 <= 1;
-			nextS    = 1;
+			MF1		 <= 1;
+			MF0		 <= 1;
+			T2		 <= 1;
+			T0		 <= 1;			
+			nextS    = 1;		
 		end
 		else if (state == 6'd49) 
 		begin
 		RFLd <= 0;IRLd<= 0;MARLd<= 0;CLR   <= 0;MDRLd<= 0;E = 0;RW<= 0;MOV <=0;typeData <=0;px<= 4'b0000;FRLd<=0;MA1<=0;MA0<= 0;MB1<= 0;MB0<=0;MC2<= 0;MC1<= 0;MC0<= 0;MD <= 0;ME<= 0;MF1<=0;MF0<= 0;MG <= 0;MH<=0;MI1<=0;MI0<= 0;MJ1 <=0;MJ0<= 0;T0 <= 0;T1 <= 0;T2 <=0;S5 <= 0;S4 <=0;S3<= 0;S2<= 0;S1<= 0;S0<= 0;OP4<= 0;OP3 <= 0;OP2 <= 0;OP1 <= 0;OP0 <= 0;
 			RFLd     <= 1;
 			MC0		 <= 1;
-			MC1	     <= 1;
 			MD     	 <= 1;
 			MI1		 <= 1;
 			OP1 	 <= 1;
@@ -545,7 +575,7 @@ always@(posedge CLK, state)
 			end
 		 LANDSIMMEDIATE: 
 			begin 
-				if(ir[23] == 1)
+				if(ir[23] == 1 && ir[24] != 0)
 					nextS = 6'd33;
 				else if(ir[24] == 0)
 					nextS = 6'd40; 
@@ -555,11 +585,11 @@ always@(posedge CLK, state)
 		LANDSREG:
 			begin
 				if(ir[23] == 1)
-					nextS = 6'd47;
+					nextS = 6'd37;
 				else if(ir[24] == 0)
 					nextS = 6'd40; 
 				else if(ir[23] ==0) 
-					nextS = 6'd37;
+					nextS = 6'd47;
 			end
 		endcase
 		// $display("after decodeIR next state = %d, instruction[27:25]= %b", nextS, ir[27:25]);

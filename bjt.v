@@ -140,7 +140,7 @@ register r13 (rf_out[13], result, CLK, ld13,CLR);
 register r14 (rf_out[14], result, CLK, ld14,CLR);
 register r15 (rf_out[15], result, CLK, ld15,CLR);
 initial begin
-    fd = $fopen("IR.dat", "r");
+    fd = $fopen("IR2.dat", "r");
     i = 0;
         while(!($feof(fd))) 
         begin
@@ -151,7 +151,7 @@ initial begin
         $fclose(fd);
 		first_time_flag = 1'b1;
 		#5 CLK = 0;
-		repeat (340) 
+		repeat (640)
 		begin	
 			#5 CLK = ~CLK;	
 		end
@@ -159,7 +159,7 @@ end
 
 
 initial 
-$monitor(" || CLK   = %d    CLR   = %d   present state = %d       next state = %d || \n || RFLd  = %d       IRLd = %d       MARLd = %d ||\n || MDRLd = %d         RW = %d         MOV = %d ||\n || FRLd  = %d        MA1 = %d         MA0 = %d ||\n || MB1   = %d        MB0 = %d         MC2 = %d || \n || MC1   = %d        MC0 = %d          MD = %d ||\n || ME    = %d         MG = %d         MF0 = %d ||\n || MF1   = %d         MH = %d         MI0 = %d ||\n || MI1   = %d        MJ0 = %d         MJ1 = %d ||\n || T2    = %d         T1 = %d          T0 = %d || \n || E     = %d         S5 = %d         S4  = %d ||\n || S3    = %d         S2 = %d         S1  = %d ||\n || S0    = %d        OP4 = %d         OP3 = %d ||\n || OP2   = %d        OP1 = %d         OP0 = %d || \n || MAOUT =%d     result = %h  instruction r = %h ||\n || MAROut = %d  PA =  %h PBOut =  %h Mux_COut = %h ||\n || END OF:     present state = %d  next state = %d, Mux_EOut = %h || \n shifter_in = %h, shifter_out = %h, MDROut = %h || Mux_GOut = %h   DaOut = %h   Mux_JOut = %h, rf0_out = %h   rf1_out = %h   rf2_out = %h   \nrf3_out = %h   rf4_out = %h rf5_out = %h   \nrf6_out = %h   rf7_out = %h   rf8_out = %h   \nrf9_out = %h   rf10_out = %h   rf11_out = %h, \nrf12_out = %h   rf13_out = %h   rf14_out = %h   \nrf15_out = %h  CondOut = %h FlagZ = %h mem[43] = %h " , CLK, CLR, cu.state,cu.nextS, RFLd,IRLd,MARLd, MDRLd,RW,MOV, FRLd,MA1,MA0,MB1,MB0,MC2,MC1,MC0,MD,ME,MG,MF0,MF1,MH,MI0,MI1,MJ0, MJ1, T2,T1,T0, E, S5,S4,S3,S2,S1,S0, OP4, OP3, OP2, OP1, OP0, MAOUT, alu.result, IROut, MAROut,PA, PB,Mux_COut,cu.state,cu.nextS, Mux_EOut, Mux_FOut, shifter_out, MDROut, Mux_GOut, DaOut, Mux_JOut,rf_out[0], rf_out[1], rf_out[2], rf_out[3], rf_out[4], rf_out[5], rf_out[6], rf_out[7], rf_out[8], rf_out[9], rf_out[10], rf_out[11], rf_out[12], rf_out[13], rf_out[14], rf_out[15], CondOut, FlagZ, ram.mem[43]);
+$monitor(" || CLK   = %d    CLR   = %d   present state = %d       next state = %d || \n || RFLd  = %d       IRLd = %d       MARLd = %d ||\n || MDRLd = %d         RW = %d         MOV = %d ||\n || FRLd  = %d        MA1 = %d         MA0 = %d ||\n || MB1   = %d        MB0 = %d         MC2 = %d || \n || MC1   = %d        MC0 = %d          MD = %d ||\n || ME    = %d         MG = %d         MF0 = %d ||\n || MF1   = %d         MH = %d         MI0 = %d ||\n || MI1   = %d        MJ0 = %d         MJ1 = %d ||\n || T2    = %d         T1 = %d          T0 = %d || \n || E     = %d         S5 = %d         S4  = %d ||\n || S3    = %d         S2 = %d         S1  = %d ||\n || S0    = %d        OP4 = %d         OP3 = %d ||\n || OP2   = %d        OP1 = %d         OP0 = %d || \n || MAOUT =%d     result = %h  instruction r = %h ||\n || MAROut = %d  PA =  %h PBOut =  %h Mux_COut = %h ||\n || END OF:     present state = %d  next state = %d, Mux_EOut = %h || \n shifter_in = %h, shifter_out = %h, MDROut = %h || Mux_GOut = %h   DaOut = %h   Mux_JOut = %h, \n rf0_out = %h   rf1_out = %h   rf2_out = %h   \nrf3_out = %h   rf4_out = %h rf5_out = %h   \nrf6_out = %h   rf7_out = %h   rf8_out = %h   \nrf9_out = %h   rf10_out = %h   rf11_out = %h, \nrf12_out = %h   rf13_out = %h   rf14_out = %h   \nrf15_out = %h  CondOut = %h FlagZ = %h mem[152] = %h%h%h%h " , CLK, CLR, cu.state,cu.nextS, RFLd,IRLd,MARLd, MDRLd,RW,MOV, FRLd,MA1,MA0,MB1,MB0,MC2,MC1,MC0,MD,ME,MG,MF0,MF1,MH,MI0,MI1,MJ0, MJ1, T2,T1,T0, E, S5,S4,S3,S2,S1,S0, OP4, OP3, OP2, OP1, OP0, MAOUT, alu.result, IROut, MAROut,PA, PB,Mux_COut,cu.state,cu.nextS, Mux_EOut, Mux_FOut, shifter_out, MDROut, Mux_GOut, DaOut, Mux_JOut,rf_out[0], rf_out[1], rf_out[2], rf_out[3], rf_out[4], rf_out[5], rf_out[6], rf_out[7], rf_out[8], rf_out[9], rf_out[10], rf_out[11], rf_out[12], rf_out[13], rf_out[14], rf_out[15], CondOut, FlagZ, ram.mem[152], ram.mem[153],ram.mem[154],ram.mem[155]);
 
 // initial begin
 //     f = $fopen("output.txt","w");
