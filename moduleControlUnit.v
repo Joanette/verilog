@@ -37,7 +37,7 @@ always@(state, ir)
 		 6'd5:
 			nextS = 6'd6; 
 		 6'd8: 
-			nextS = 6'd8;
+			nextS = 6'd9;
 		 6'd10: 
 			nextS = 6'd8; 
 		 6'd33: 
@@ -210,14 +210,14 @@ always@(state, ir)
 				nextS = 6'd7; 
 			BRANCH:
 			begin 
-				if(ir[24] ==0)
+				if(ir[24] == 0)
 				 nextS = 6'd8;
 				else if(ir[24] == 1)
 				 nextS = 6'd10; 
 			end
 			LANDSIMMEDIATE: 
 			begin 
-				if(ir[23] == 1)
+				if(ir[23] == 1 && ir[24] != 0 )
 					nextS = 6'd33;
 				else if(ir[24] == 0)
 					nextS = 6'd40; 
@@ -227,15 +227,16 @@ always@(state, ir)
 			LANDSREG:
 			begin
 				if(ir[23] == 1)
-					nextS = 6'd47;
+					nextS = 6'd37;
 				else if(ir[24] == 0)
 					nextS = 6'd40; 
 				else if(ir[23] ==0) 
-					nextS = 6'd37;
+					nextS = 6'd47;
 			end
 		endcase
 	endtask
 endmodule
+
 module stateRegister(CLK, CLR,nextS, state);
 input CLK; 
 input CLR; 
